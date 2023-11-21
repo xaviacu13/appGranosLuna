@@ -8,14 +8,14 @@
     (click)="resetForm()"
   >
     <i class="fas fa-plus-circle"></i>
-    Agregar Insumo
+    Agregar Producto
   </button>
 
   <input
     class="form-control mr-sm-2"
     type="text"
     name="filterPost"
-    placeholder="Buscar Insumo"
+    placeholder="Buscar Producto"
     aria-label="Search"
     [(ngModel)]="filterPost"
   />
@@ -40,7 +40,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalScrollableTitle">
-          Registro de Insumo
+          Registro de Producto
         </h5>
         <button
           type="button"
@@ -70,7 +70,7 @@
               <div>
                 <div class="m-3">
                   <div class="row m-3">
-                    <label for="">Imagen de Insumo *</label>
+                    <label for="">Imagen de Producto *</label>
                   </div>
                   <!-- <img [src]="imgSrc" *ngIf="imgSrc" width="100" height="120" /> -->
                   <div *ngIf="imgSrc" class="image_wrapper row" id="img1">
@@ -184,7 +184,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label for="">Color *</label>
+                <label for="">Tipo de Producto *</label>
                 <input
                   type="text"
                   class="form-control"

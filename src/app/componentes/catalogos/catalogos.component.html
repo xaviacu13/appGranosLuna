@@ -7,7 +7,7 @@
   (click)="resetForm()"
 >
   <i class="fas fa-plus-circle"></i>
-  Agregar Catalogo
+  Agregar Producto
 </button>
 
 <!-- Modal -->
@@ -23,7 +23,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalScrollableTitle">
-          Registro de Catalogo
+          Registro de Producto
         </h5>
         <button
           type="button"
@@ -207,16 +207,16 @@
                 </div>
               </div>
               <div class="form-group">
-                <label for="">Tiempo de Acabado (Días)*</label>
+                <label for="">Tiempo de entrega (Días)*</label>
                 <input
                   type="text"
                   class="form-control"
                   name="tAcabado"
                   #tAcabado="ngModel"
                   [(ngModel)]="catalogoService.selectedCatalogo.tAcabado"
-                  placeholder="Tiempo de Acabado"
+                  placeholder="Tiempo de entrega"
                   required
-                  maxlength="5"
+                  maxlength="50"
                   minlength="1"
                 />
                 <div class="row">
