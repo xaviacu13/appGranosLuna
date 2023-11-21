@@ -1,0 +1,295 @@
+
+<!-- Button trigger modal -->
+<form class="form-inline my-2 my-lg-0">
+  <button [disabled]="btnAddPedido" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalScrollable">
+      <i class="fas fa-plus-circle"></i>
+      Agregar Nuevo Pedi
+    </button>
+  
+      <input class="form-control mr-sm-2" type="text" name="filterPost" placeholder="Buscar Pedido" aria-label="Search" [(ngModel)]="filterPost">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+    </form>
+<!-- Modal -->
+<div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalScrollableTitle">Registro de Pedidos</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!--registroPedido insertar -->
+        
+
+        <div class="card mt-5" >
+            <div class="card-body">
+                <form #regPedidoForm ="ngForm" (ngSubmit)="onSubmit(regPedidoForm)">
+                 
+                  <input type="hidden " style="display:none" name ="$key" #$key="ngModel" [(ngModel)]="regPedidoService.selectedRegPedido.$key">
+               
+                    <div class="form-group">
+                        <input
+                        type="text"
+                        class="form-control"
+                        name="cliente"
+                        #cliente="ngModel"
+                        [(ngModel)]="regPedidoService.selectedRegPedido.cliente"
+                        placeholder="Agregar Cliente hkhhk"
+                        >
+                    </div>
+                    <div class="form-group">
+                            <input
+                            type="text"
+                            class="form-control"
+                            name="sucursal"
+                            #sucursal="ngModel"
+                            [(ngModel)]="regPedidoService.selectedRegPedido.sucursal"
+                            placeholder="Agregar Sucursal"
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <input
+                            type="text"
+                            class="form-control"
+                            name="personal"
+                            #personal="ngModel"
+                            [(ngModel)]="regPedidoService.selectedRegPedido.personal"
+                            placeholder="Agregar Personal"
+                            >
+                        </div>
+                        <div class="form-group">
+                                <input
+                                type="text"
+                                class="form-control"
+                                name="costoTotal"
+                                #costoTotal="ngModel"
+                                [(ngModel)]="regPedidoService.selectedRegPedido.costoTotal"
+                                placeholder="costo Total"
+                                >
+                            </div>
+        
+                            <div class="form-group">
+                                    <input
+                                    type="text"
+                                    class="form-control"
+                                    name="adelanto"
+                                    #adelanto="ngModel"
+                                    [(ngModel)]="regPedidoService.selectedRegPedido.adelanto"
+                                    placeholder="Monto Total"
+                                    >
+                                </div>
+                                <!-- <div class="form-group">
+                                        <input
+                                        type="text"
+                                        class="form-control"
+                                        name="saldo"
+                                        #adelanto="ngModel"
+                                        [(ngModel)]="regPedidoService.selectedRegPedido."
+                                        placeholder="Saldo"
+                                        >
+                                    </div> -->
+
+                                    <div class="form-group">
+                                      <input
+                                      type="text"
+                                      class="form-control"
+                                      name="saldo"
+                                      #saldo="ngModel"
+                                      [(ngModel)]="regPedidoService.selectedRegPedido.saldo"
+                                      placeholder="Saldo"
+                                      >
+                                  </div>
+
+                                  <div class="form-group">
+                                    <input
+                                    type="text"
+                                    class="form-control"
+                                    name="fechaRegistro"
+                                    #fechaRegistro="ngModel"
+                                    [(ngModel)]="regPedidoService.selectedRegPedido.fechaRegistro"
+                                    placeholder="Fecha de Registro"
+                                    >
+                                </div>
+
+                                <div class="form-group">
+                                  <input
+                                  type="text"
+                                  class="form-control"
+                                  name="fechaLimite"
+                                  #fechaLimite="ngModel"
+                                  [(ngModel)]="regPedidoService.selectedRegPedido.fechaLimite"
+                                  placeholder="Fecha Limite de Entrega"
+                                  >
+                              </div>
+                                   
+                              
+                              <div class="form-group">
+                                <input
+                                type="text"
+                                class="form-control"
+                                name="fechaEntega"
+                                #fechaEntega="ngModel"
+                                [(ngModel)]="regPedidoService.selectedRegPedido.fechaEntega"
+                                placeholder="Registrar Fecha de entreha"
+                                >
+                            </div>
+                               
+                            <div class="form-group">
+                              <input
+                              type="text"
+                              class="form-control"
+                              name="estado"
+                              #estado="ngModel"
+                              [(ngModel)]="regPedidoService.selectedRegPedido.estado"
+                              placeholder="Registrar Estado"
+                              >
+                          </div>
+                                             
+        
+                 
+                        <div class="modal-footer">
+
+                        <button class ="btn btn-primary" type="submit">
+                            <i class="fas fa-plus-circle">Agregar </i>
+        
+                        </button>
+                        <button class="btn btn-secondary " type="reset" (click)="resetForm(regPedidoForm)">
+                            <i class=" fas fa sync-alt"> Limpiar </i>
+        
+        
+                        </button>
+                    </div>
+        
+        
+        
+        
+                </form>
+                
+            </div>
+        
+        </div>
+        
+
+
+        <!---->
+      </div>
+      <div class="modal-footer">
+          <button class ="btn btn-primary" type="submit">
+              <i class="fas fa-plus-circle">Agregar </i>
+
+          </button>
+          <button class="btn btn-secondary " type="reset" (click)="resetForm(regPedidoForm)">
+              <i class=" fas fa sync-alt"> Limpiar </i>
+
+
+          </button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<!--mostrar taabla-->
+
+<div clase="card">
+<div class="card-body">
+<h6 class="text-center">LISTA DE PEDIDOS
+  <table class="table ">
+      <thead>
+          <tr>
+    
+            <th scope="col">CLIENTE</th>
+            <th scope="col">SUCURZAL</th>
+            <th scope="col">PERSONAL</th>
+            <th scope="col">COSTO TOTAL</th>                 
+            <th scope="col">ADELANTO</th>
+            <th scope="col">SALDO</th>
+            <th scope="col">FECHA DE REGISTRO</th>
+            <th scope="col">FECHA LIMITE DE ENTREGA</th>
+            <th scope="col">FECHA DE ENTREGA</th>
+            <th scope="col">ESTADO</th>
+            <th scope="col">ACCION</th>
+          </tr>
+        </thead>
+    <tbody>
+      <!--
+      <tr *ngFor="let regPedido of regPedidoList |regPedidoFilter : filterPost ">
+      -->
+      <tr *ngFor="let regPedido of regPedidoList ">
+      
+        <td>{{regPedido.cliente}}</td>
+        <td>{{regPedido.sucursal}}</td>
+        <td>{{regPedido.personal}}</td>
+        <td>{{regPedido.costoTotal}}</td>
+        <td>{{regPedido.adelanto}}</td>
+        <td>{{regPedido.saldo}}</td>
+        <td>{{regPedido.fechaRegistro}}</td>
+        <td>{{regPedido.fechaLimite}}</td>
+        <td>{{regPedido.fechaEntega}}</td>
+        <td>{{regPedido.estado}}</td>
+
+        <a class="btn btn-secondary text-white" (click)="onEdit(regPedido)" data-toggle="modal" data-target="#exampleModalScrollable">
+          <i class="fas fa-edit"></i>
+        </a>
+          <a class="btn btn-danger text-white" (click)="onDelete(regPedido.$key)">
+              <i class="fas fa-trash-alt"></i>
+            </a>
+
+
+
+      </tr>
+
+    </tbody>
+
+
+  </table>
+</h6>
+
+
+</div>
+
+</div>
+<!---->
+
+
+
+
+<!--
+<table class="table table-striped">
+      <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>{{personal.nombre}}</td>
+      <td>{{personal.apellido}}</td>
+      <td>{{personal.ci}}</td>
+      <td>{{personal.expedicion}}</td>
+      <td>
+        <a class="btn btn-secondary text-white" (click)="onEdit(Personal)">
+          <i class="fas fa-edit"></i>
+        </a>
+        <a class="btn btn-danger text-white" (click)="onDelete(Personal.$key)">
+            <i class="fas fa-trash-alt"></i>
+          </a>
+      </td>
+    
+    </tr>
+    
+  </tbody>
+</table>
+-->
+

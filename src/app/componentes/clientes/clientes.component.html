@@ -1,0 +1,441 @@
+<!-- Button trigger modal -->
+<form class="form-inline my-2 my-lg-0">
+  <button
+    type="button"
+    class="btn btn-primary"
+    data-toggle="modal"
+    data-target="#exampleModalScrollable"
+    (click)="resetForm()"
+  >
+    <i class="fas fa-plus-circle"></i>
+    Agregar Cliente
+  </button>
+
+  <input
+    class="form-control mr-sm-2"
+    type="text"
+    name="filterPost"
+    placeholder="Buscar Cliente"
+    aria-label="Search"
+    [(ngModel)]="filterPost"
+  />
+  <button
+    class="btn btn-outline-success my-2 my-sm-0"
+    (click)="generarReporte()"
+  >
+    Generar Reporte
+  </button>
+</form>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="exampleModalScrollable"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalScrollableTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalScrollableTitle">
+          Registro de Clientes
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <label for="">Datos Obligatorios *</label>
+        <!--personal insertar -->
+
+        <div class="card mt-5">
+          <div class="card-body">
+            <form #clienteForm="ngForm" (ngSubmit)="onSubmit(clienteForm)">
+              <div class="row">
+                <input
+                  type="hidden "
+                  style="display:none"
+                  name="$key"
+                  #$key="ngModel"
+                  [(ngModel)]="clienteService.selectedCliente.$key"
+                />
+
+                <div class="form-group col">
+                  <label for="">Perfil *</label>
+                  <div *ngIf="imgSrc" class="image_wrapper row" id="img1">
+                    <img
+                      [src]="imgSrc"
+                      #image
+                      width="100"
+                      height="120"
+                      (click)="deletImg(image.src)"
+                      required
+                    />
+                    <button type="button" class="remove" (click)="deletImg()">
+                      <i class="fas fa-minus-circle"></i>
+                    </button>
+                  </div>
+                  <input
+                    type="file"
+                    placeholder="Agregar Perfil"
+                    (change)="uploadFile1($event)"
+                    #fileUploader
+                    required
+                  />
+                  <div class="progress">
+                    <div
+                      class="progress-bar progress-bar-striped bg-success"
+                      role="progressbar"
+                      [style.width]="(uploadPercent | async) + '%'"
+                    ></div>
+                  </div>
+                  <input
+                    id="urlImageValue"
+                    type="hidden"
+                    name=""
+                    [value]="urlImage | async"
+                  />
+                </div>
+
+                <div class="form-group col">
+                  <label for="">Nombre *</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="nombre"
+                    #nombre="ngModel"
+                    [(ngModel)]="clienteService.selectedCliente.nombre"
+                    placeholder="Nombre"
+                    required
+                    maxlength="50"
+                    minlength="3"
+                  />
+                  <div class="row">
+                    <div *ngIf="nombre.value != undefined" class="col">
+                      <p>Max: {{ nombre.value.length }}/50</p>
+                    </div>
+
+                    <div
+                      class="text-danger col"
+                      *ngIf="nombre.errors && (nombre.dirty || nombre.touched)"
+                    >
+                      <p [hidden]="!nombre.errors.required">
+                        Campo requerido.
+                      </p>
+                      <p *ngIf="nombre.errors?.minlength">
+                        Mínimo 3 caracteres
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col">
+                  <label for="">Apellidos</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="apellido"
+                    #apellido="ngModel"
+                    [(ngModel)]="clienteService.selectedCliente.apellido"
+                    placeholder="Apellidos"
+                    maxlength="50"
+                  />
+                  <div *ngIf="apellido.value != undefined" class="col">
+                    <p>Max: {{ apellido.value.length }}/50</p>
+                  </div>
+                </div>
+                <div class="form-group col">
+                  <label for="">Cedula de Identidad *</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="ci"
+                    #ci="ngModel"
+                    [(ngModel)]="clienteService.selectedCliente.ci"
+                    placeholder="Cédula de Identidad"
+                    maxlength="10"
+                    minlength="6"
+                    required
+                  />
+                  <div class="row">
+                    <div *ngIf="ci.value != undefined" class="col">
+                      <p>Max: {{ ci.value.length }}/10</p>
+                    </div>
+
+                    <div
+                      class="text-danger col"
+                      *ngIf="ci.errors && (ci.dirty || ci.touched)"
+                    >
+                      <p [hidden]="!ci.errors.required">
+                        Campo requerido.
+                      </p>
+                      <p *ngIf="ci.errors?.minlength">
+                        Mínimo 6 caracteres
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col">
+                  <label for="">Lugar de Expedición *</label>
+                  <select
+                    class="form-control"
+                    name="expedicion"
+                    #expedicion="ngModel"
+                    [(ngModel)]="clienteService.selectedCliente.expedicion"
+                    placeholder="Agredar Expedicion"
+                    required
+                  >
+                    <option [selected]="true" [ngValue]="undefined"
+                      >--Seleccione--</option
+                    >
+                    <option>BENI</option>
+                    <option>CHUQUISACA</option>
+                    <option>COCHABAMBA</option>
+                    <option>LA PAZ</option>
+                    <option>ORURO</option>
+                    <option>PANDO</option>
+                    <option>POTOSI</option>
+                    <option>SANTA CRUZ</option>
+                    <option>TARIJA</option>
+                  </select>
+                  <div class="row">
+                    <div
+                      class="text-danger col"
+                      *ngIf="
+                      expedicion.errors &&
+                        (expedicion.dirty || expedicion.touched)
+                      "
+                    >
+                      <p [hidden]="!expedicion.errors.required">
+                        Campo requerido.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group col">
+                  <label for="">Telefono</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="telefono"
+                    #telefono="ngModel"
+                    [(ngModel)]="clienteService.selectedCliente.telefono"
+                    placeholder="Telefono"
+                    maxlength="10"
+                  />
+                  <div *ngIf="telefono.value != undefined" class="col">
+                    <p>Max: {{ telefono.value.length }}/10</p>
+                  </div>
+                </div>
+                <div class="form-group col">
+                  <label for="">Direccion</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="direccion"
+                    #direccion="ngModel"
+                    [(ngModel)]="clienteService.selectedCliente.direccion"
+                    placeholder="Direccion"
+                    maxlength="50"
+                  />
+                  <div *ngIf="direccion.value != undefined" class="col">
+                    <p>Max: {{ direccion.value.length }}/50</p>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <label>Seleccionar Sexo *</label>
+                  <div class="input-group mb-3">
+                    <select
+                      class="form-control"
+                      name="sexo"
+                      #sexo="ngModel"
+                      [(ngModel)]="clienteService.selectedCliente.sexo"
+                      required
+                    >
+                      <option [selected]="true" [ngValue]="undefined"
+                        >--Seleccione--</option
+                      >
+                      <option>MASCULINO</option>
+                      <option>FEMENINO</option>
+                    </select>
+                  </div>
+                  <div class="row">
+                    <div
+                      class="text-danger col"
+                      *ngIf="sexo.errors && (sexo.dirty || sexo.touched)"
+                    >
+                      <p [hidden]="!sexo.errors.required">
+                        Campo requerido.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <!-- 
+                <div class="form-group col">
+                  <label for="">Sexo *</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="sexo"
+                    #sexo="ngModel"
+                    [(ngModel)]="clienteService.selectedCliente.sexo"
+                    placeholder="Sexo"
+                  />
+                </div> -->
+
+                <div class="form-group col">
+                  <label for="">Correo Electronico</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="email"
+                    #email="ngModel"
+                    [(ngModel)]="clienteService.selectedCliente.email"
+                    placeholder="Agregar email"
+                    maxlength="50"
+                  />
+                  <div *ngIf="email.value != undefined" class="col">
+                    <p>Max: {{ email.value.length }}/50</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="modal-footer">
+                <button
+                  class="btn btn-primary"
+                  type="submit"
+                  [disabled]="!clienteForm.valid"
+                >
+                  <i class="fas fa-plus-circle">Agregar </i>
+                </button>
+                <!-- <ng-template #btnDisabled>
+                  <button
+                    disabled="true"
+                    class="btn btn-secondary"
+                    type="submit"
+                  >
+                    <i class="fas fa-plus-circle">Agregar </i>
+                  </button>
+                </ng-template> -->
+                <!-- <button class="btn btn-primary" type="submit">
+                  <i class="fas fa-plus-circle">Agregar </i>
+                </button> -->
+                <button
+                  class="btn btn-secondary "
+                  type="reset"
+                  (click)="resetForm(clienteForm)"
+                >
+                  <i class=" fas fa sync-alt"> Limpiar </i>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!---->
+      </div>
+      <!-- <div class="modal-footer">
+            <button class ="btn btn-primary" type="submit">
+                <i class="fas fa-plus-circle">Agregar </i>
+
+            </button>
+            <button class="btn btn-secondary " type="reset" (click)="resetForm(ClienteForm)">
+                <i class=" fas fa sync-alt"> Limpiar </i>
+
+
+            </button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      
+        </div> -->
+    </div>
+  </div>
+</div>
+
+<!--mostrar taabla-->
+
+<div clase="card">
+  <div class="card-body">
+    <h2 class="text-center">LISTA DE CLIENTES</h2>
+    <table class="table ">
+      <thead>
+        <tr>
+          <th scope="col">NOMBRE</th>
+
+          <th scope="col">APELLIDO</th>
+          <th scope="col">CI</th>
+          <th scope="col">EXPEDICION</th>
+          <th scope="col">TELEFONO</th>
+          <th scope="col">DIRECCION</th>
+          <th scope="col">SEXO</th>
+          <th scope="col">EMAIL</th>
+          <th scope="col">PERFIL</th>
+          <th scope="col">EVENTOS</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cliente of clienteList | filter: filterPost">
+          <td>{{ cliente.nombre }}</td>
+          <td>{{ cliente.apellido }}</td>
+          <td>{{ cliente.ci }}</td>
+          <td>{{ cliente.expedicion }}</td>
+          <td>{{ cliente.telefono }}</td>
+          <td>{{ cliente.direccion }}</td>
+          <td>{{ cliente.sexo }}</td>
+          <td>{{ cliente.email }}</td>
+          <!-- <td>{{ cliente.perfil }}</td> -->
+          <td>
+            <img src="{{ cliente.perfil }}" alt="" width="70" height="70" />
+          </td>
+
+          <a
+            class="btn btn-secondary text-white"
+            (click)="onEdit(cliente)"
+            data-toggle="modal"
+            data-target="#exampleModalScrollable"
+          >
+            <i class="fas fa-edit"></i>
+          </a>
+          <a class="btn btn-danger text-white" (click)="onDelete(cliente.$key)">
+            <i class="fas fa-trash-alt"></i>
+          </a>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<!---->
+
+<!--
+<table class="table table-striped">
+        <tbody>
+      <tr>
+        <th scope="row">1</th>
+        <td>{{personal.nombre}}</td>
+        <td>{{personal.apellido}}</td>
+        <td>{{personal.ci}}</td>
+        <td>{{personal.expedicion}}</td>
+        <td>
+          <a class="btn btn-secondary text-white" (click)="onEdit(Personal)">
+            <i class="fas fa-edit"></i>
+          </a>
+          <a class="btn btn-danger text-white" (click)="onDelete(Personal.$key)">
+              <i class="fas fa-trash-alt"></i>
+            </a>
+        </td>
+      
+      </tr>
+      
+    </tbody>
+  </table>
+-->

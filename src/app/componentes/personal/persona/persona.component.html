@@ -1,0 +1,116 @@
+<div class="card mt-5" >
+    <div class="card-body">
+        <form #PersonalForm ="ngForm" (ngSubmit)="onSubmit(PersonalForm)">
+            <div class="form-group">
+                <input
+                type="text"
+                class="form-control"
+                name="nombre"
+                #nombre="ngModel"
+                [(ngModel)]="personalService.selectedPersonal.nombre"
+                placeholder="Agregar "
+                >
+            </div>
+            <div class="form-group">
+                    <input
+                    type="text"
+                    class="form-control"
+                    name="apellido"
+                    #apellido="ngModel"
+                    [(ngModel)]="personalService.selectedPersonal.apellido"
+                    placeholder="Agregar Apellido"
+                    >
+                </div>
+                <div class="form-group">
+                        <input
+                        type="text"
+                        class="form-control"
+                        name="ci"
+                        #ci="ngModel"
+                        [(ngModel)]="personalService.selectedPersonal.ci"
+                        placeholder="Agregar CI"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                            <input
+                            type="text"
+                            class="form-control"
+                            name="expedicion"
+                            #expedicion="ngModel"
+                            [(ngModel)]="personalService.selectedPersonal.expedicion"
+                            placeholder="Agredar Expedicion"
+                            >
+                        </div>
+                        <div class="form-group">
+                                <input
+                                type="text"
+                                class="form-control"
+                                name="telefono"
+                                #telefono="ngModel"
+                                [(ngModel)]="personalService.selectedPersonal.telefono"
+                                placeholder="Agregar Telefono"
+                                >
+                            </div>
+                            <div class="form-group">
+                                    <input
+                                    type="text"
+                                    class="form-control"
+                                    name="direccion"
+                                    #direcion="ngModel"
+                                    [(ngModel)]="personalService.selectedPersonal.direccion"
+                                    placeholder="Agregar Direccion"
+                                    >
+                                </div>
+                                <div class="form-group">
+                                        <input
+                                        type="text"
+                                        class="form-control"
+                                        name="email"
+                                        #email="ngModel"
+                                        [(ngModel)]="personalService.selectedPersonal.email"
+                                        placeholder="Agregar email"
+                                        >
+                                    </div>
+                                <div class="form-group">
+                                        <input
+                                        type="text"
+                                        class="form-control"
+                                        name="sexo"
+                                        #sexo="ngModel"
+                                        [(ngModel)]="personalService.selectedPersonal.sexo"
+                                        placeholder="Agregar Sexo"
+                                        >
+                                    </div>
+                                    <div class="form-group">
+                                            <input
+                                            type="text"
+                                            class="form-control"
+                                            name="cargo"
+                                            #cargo="ngModel"
+                                            [(ngModel)]="personalService.selectedPersonal.cargo"
+                                            placeholder="Agregar Cargo"
+                                            >
+                                        </div>
+                                     
+
+            <!-- <div>
+                <button class ="btn btn-primary" type="submit">
+                    <i class="fas fa-plus-circle">Agregar </i>
+
+                </button>
+                <button class="btn btn-secondary " type="reset" (click)="resetForm(PersonalForm)">
+                    <i class=" fas fa sync-alt"> Limpiar </i>
+
+
+                </button>
+            </div> -->
+
+
+
+
+        </form>
+        <app-autentificacion></app-autentificacion>
+    </div>
+
+</div>

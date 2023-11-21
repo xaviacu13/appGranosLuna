@@ -1,0 +1,85 @@
+<h3 class="text-center">CATALOGO</h3>
+<div class="row m-3">
+  <label for="" class="col"><b>Correo:</b> {{ correo }}</label>
+  <label for="" class="col"><b>Nombre:</b> {{ nombre }}</label>
+  <label for="" class="col"><b>Apellido:</b> {{ apellido }}</label>
+  <label for="" class="col"><b>C.I.:</b> {{ cedula }}</label>
+</div>
+<div
+  class="card mb-3"
+  style="max-width: 540px;"
+  *ngFor="let catalogo of catalogoList"
+  data-toggle="modal"
+  data-target="#exampleModalCenter"
+  (click)="idImagen(catalogo.$key)"
+
+>
+  <div class="row no-gutters">
+    <div class="col-md-4">
+      <!-- <img src="https://naisa.es/8105-thickbox_default/chaleco-panoply-multibolsillos-de-poliesteralgodon.jpg" class="card-img" alt="..."> -->
+      <img src="{{ catalogo.imagen1 }}" class="card-img" alt="..." />
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">{{ catalogo.descripcion }}</h5>
+        <p class="card-text">Precio: {{ catalogo.precio }}</p>
+        <p class="card-text">
+          <small class="text-muted"
+            >Descuento: {{ catalogo.descueto }}<Body> </Body
+          ></small>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="exampleModalCenter"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">PEDIDO</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="card mb-3" style="max-width: 540px;">
+        <div class="row no-gutters">
+          <div class="col-md-4">
+            <!-- <img src="https://naisa.es/8105-thickbox_default/chaleco-panoply-multibolsillos-de-poliesteralgodon.jpg" class="card-img" alt="..."> -->
+            <img src="{{ imagen1 }}" class="card-img" alt="..." />
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title">{{ descripcion }}</h5>
+              <p class="card-text">Precio: {{ precio }}</p>
+              <p class="card-text">
+                <small class="text-muted"
+                  >Descuento: {{ descuento }}<Body> </Body
+                ></small>
+              </p>
+              Cantidad:
+              <input type="number" name="" id="" #cant/>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+        <button type="button" class="btn btn-primary" (click)="btnPedir(cant)" >Pedir</button>
+      </div>
+    </div>
+  </div>
+</div>

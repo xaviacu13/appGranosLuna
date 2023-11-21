@@ -1,0 +1,212 @@
+<div class="card mt-2">
+  <h3 class="text-center">
+    REGISTRO USUARIO
+  </h3>
+  <div class="card-body">
+    <form #clienteForm="ngForm" (ngSubmit)="onSubmit(clienteForm)">
+      <div class="row">
+        <input
+          type="hidden "
+          style="display:none"
+          name="$key"
+          #$key="ngModel"
+          [(ngModel)]="clienteService.selectedCliente.$key"
+        />
+
+        <div class="form-group col">
+          <label for="">Nombre</label>
+          <input
+            type="text"
+            class="form-control"
+            name="nombre"
+            #nombre="ngModel"
+            [(ngModel)]="clienteService.selectedCliente.nombre"
+            placeholder="Agregar Nombre"
+          />
+        </div>
+        <div class="form-group col">
+          <label for="">Apellido</label>
+          <input
+            type="text"
+            class="form-control"
+            name="apellido"
+            #apellido="ngModel"
+            [(ngModel)]="clienteService.selectedCliente.apellido"
+            placeholder="Agregar Apellido"
+          />
+        </div>
+        <div class="form-group col">
+          <label for="">Cedula de Identidad</label>
+          <input
+            type="text"
+            class="form-control"
+            name="ci"
+            #ci="ngModel"
+            [(ngModel)]="clienteService.selectedCliente.ci"
+            placeholder="Agregar CI"
+          />
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col">
+          <label for="exampleFormControlSelect1">Expedido:</label>
+          <select
+            class="form-control"
+            id="exampleFormControlSelect1"
+            name="expedicion"
+            #expedicion="ngModel"
+            [(ngModel)]="clienteService.selectedCliente.expedicion"
+          >
+            <option value="Chuquisaca">Chuquisaca</option>
+            <option value="La Paz">La Paz</option>
+            <option value="Tarija">Tarija</option>
+            <option value="Oruro">Oruro</option>
+            <option value="Cochabamba">Cochabamba</option>
+            <option value="Tarija">Tarija</option>
+            <option value="Beni">Beni</option>
+            <option value="Santa Cruz">Santa Cruz</option>
+            <option value="Potosi">Potosi</option>
+          </select>
+        </div>
+        <!-- <div class="form-group col">
+          <label for="">Expedito</label>
+          <input
+            type="text"
+            class="form-control"
+            name="expedicion"
+            #expedicion="ngModel"
+            [(ngModel)]="clienteService.selectedCliente.expedicion"
+            placeholder="Agredar Expedicion"
+          />
+        </div> -->
+        <div class="form-group col">
+          <label for="">Telefono</label>
+          <input
+            type="text"
+            class="form-control"
+            name="telefono"
+            #telefono="ngModel"
+            [(ngModel)]="clienteService.selectedCliente.telefono"
+            placeholder="Agregar Telefono"
+          />
+        </div>
+        <div class="form-group col">
+          <label for="">Direccion</label>
+          <input
+            type="text"
+            class="form-control"
+            name="direccion"
+            #direcion="ngModel"
+            [(ngModel)]="clienteService.selectedCliente.direccion"
+            placeholder="Agregar Direccion"
+          />
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col">
+          <label for="exampleFormControlSelect1">Sexo</label>
+          <select
+            class="form-control"
+            id="exampleFormControlSelect1"
+            name="sexo"
+            #sexo="ngModel"
+            [(ngModel)]="clienteService.selectedCliente.sexo"
+          >
+            <option value="Masculino">Masculino</option>
+            <option value="Femenino">Femenino</option>
+          </select>
+        </div>
+        <!-- <div class="form-group col">
+                  <label for="">Sexo</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="sexo"
+                    #sexo="ngModel"
+                    [(ngModel)]="clienteService.selectedCliente.sexo"
+                    placeholder="Agregar Sexo"
+                  />
+                </div> -->
+
+        <div class="form-group col">
+          <label for="">Correo Electronico</label>
+          <input
+            type="text"
+            class="form-control"
+            name="email"
+            #email="ngModel"
+            [(ngModel)]="clienteService.selectedCliente.email"
+            placeholder="Agregar email"
+          />
+        </div>
+
+        <div class="form-group col">
+          <label for="">Contraseña:</label>
+          <input
+            type="text"
+            class="form-control"
+            name="pass"
+            #pass="ngModel"
+            [(ngModel)]="clienteService.selectedCliente.pass"
+            placeholder="Agregar Contraseña"
+          />
+        </div>
+
+        <div class="form-group col">
+          <label for="">Perfil</label>
+          <div class="m-3">
+            <img [src]="imgSrc" *ngIf="imgSrc" width="100" height="120" />
+          </div>
+          <input
+            type="file"
+            class="form-control"
+            name="perfil"
+            #perfil="ngModel"
+            [(ngModel)]="clienteService.selectedCliente.perfil"
+            placeholder="Agregar Perfil"
+            (change)="uploadFile1($event)"
+          />
+          <div class="progress">
+            <div
+              class="progress-bar progress-bar-striped bg-success"
+              role="progressbar"
+              [style.width]="(uploadPercent | async) + '%'"
+            ></div>
+          </div>
+          <input
+            id="urlImageValue"
+            type="hidden"
+            name=""
+            [value]="urlImage | async"
+          />
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button
+          *ngIf="urlImage | async; else btnDisabled"
+          class="btn btn-primary"
+          type="submit"
+        >
+          <i class="fas fa-plus-circle">Agregar </i>
+        </button>
+        <ng-template #btnDisabled>
+          <button disabled="true" class="btn btn-secondary" type="submit">
+            <i class="fas fa-plus-circle">Agregar </i>
+          </button>
+        </ng-template>
+        <!-- <button class="btn btn-primary" type="submit">
+                  <i class="fas fa-plus-circle">Agregar </i>
+                </button> -->
+        <button
+          class="btn btn-secondary "
+          type="reset"
+          (click)="resetForm(clienteForm)"
+        >
+          <i class=" fas fa sync-alt"> Limpiar </i>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

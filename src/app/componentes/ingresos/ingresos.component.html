@@ -1,0 +1,148 @@
+<div class="card mt-2">
+  <h3 class="text-center">
+    Registro de Ingresos
+  </h3>
+  <div class="card-body">
+    <form #cajaForm="ngForm" (ngSubmit)="onSubmit(cajaForm)">
+      <input
+        type="hidden "
+        style="display:none"
+        name="$key"
+        #$key="ngModel"
+        [(ngModel)]="cajaService.selectedCaja.$key"
+      />
+
+      <div class="row">
+        <div class="form-group col">
+          <label for="">Monto de Ingreso (Bs.) *</label>
+          <input
+            type="text"
+            class="form-control"
+            name="ingreso"
+            #ingreso="ngModel"
+            [(ngModel)]="cajaService.selectedCaja.ingreso"
+            placeholder="Registrar Monto de Ingreso"
+            required
+            maxlength="10"
+          />
+          <div class="row">
+            <div *ngIf="ingreso.value != undefined" class="col">
+              <p>Max: {{ ingreso.value.length }}/10</p>
+            </div>
+
+            <div
+              class="text-danger col"
+              *ngIf="ingreso.errors && (ingreso.dirty || ingreso.touched)"
+            >
+              <p [hidden]="!ingreso.errors.required">
+                Campo requerido.
+              </p>
+            </div>
+          </div>
+        </div>
+        
+
+        <div class="form-group col">
+          <label for="">Detalle de Ingreso *</label>
+          <input
+            type="text"
+            class="form-control"
+            name="glosa"
+            #glosa="ngModel"
+            [(ngModel)]="cajaService.selectedCaja.glosa"
+            placeholder="Agregar Detalle del Ingreso"
+            required
+            minlength="5"
+            maxlength="50"
+          />
+          <div class="row">
+            <div *ngIf="glosa.value != undefined" class="col">
+              <p>Max: {{ glosa.value.length }}/50</p>
+            </div>
+
+            <div
+              class="text-danger col"
+              *ngIf="glosa.errors && (glosa.dirty || glosa.touched)"
+            >
+              <p [hidden]="!glosa.errors.required">
+                Campo requerido.
+              </p>
+              <p *ngIf="glosa.errors?.minlength">
+                Mínimo 5 caracteres
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col">
+          <label for="">Fecha de Ingreso *</label>
+          <input
+            type="date"
+            class="form-control"
+            name="fecha"
+            #fecha="ngModel"
+            [(ngModel)]="cajaService.selectedCaja.fecha"
+            placeholder="Registrar Fecha de Ingreso"
+            required
+          />
+          <div class="row">
+            <div
+              class="text-danger col"
+              *ngIf="fecha.errors && (fecha.dirty || fecha.touched)"
+            >
+              <p [hidden]="!fecha.errors.required">
+                Campo requerido.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group col">
+          <label for="">Personal *</label>
+          <input
+            type="text"
+            class="form-control"
+            name="personal"
+            #personal="ngModel"
+            [(ngModel)]="cajaService.selectedCaja.personal"
+            placeholder="Agregar Personal"
+            required
+            maxlength="50"
+            minlength="5"
+          />
+          <div class="row">
+            <div *ngIf="personal.value != undefined" class="col">
+              <p>Max: {{ personal.value.length }}/50</p>
+            </div>
+
+            <div
+              class="text-danger col"
+              *ngIf="personal.errors && (personal.dirty || personal.touched)"
+            >
+              <p [hidden]="!personal.errors.required">
+                Campo requerido.
+              </p>
+              <p *ngIf="personal.errors?.minlength">
+                Mínimo 3 caracteres
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button [disabled]="!cajaForm.valid" class="btn btn-primary" type="submit">
+          <i class="fas fa-plus-circle">Agregar </i>
+        </button>
+        <button
+          class="btn btn-secondary "
+          type="reset"
+          (click)="resetForm(cajaForm)"
+        >
+          <i class=" fas fa sync-alt"> Limpiar </i>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

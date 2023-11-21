@@ -1,0 +1,92 @@
+<form class="form-inline my-2 my-lg-0"></form>
+
+<div clase="card">
+  <div class="card-body">
+    <h3 class="text-center">
+      REGISTRO CAJA
+    </h3>
+
+    <button class="btn btn-success" (click)="generarReporte()" >Generar Reporte</button>
+    <!-- <select
+      class="form-control"
+      (change)="cedulaCliente($event)"
+    >
+      <option  *ngFor="let cedula of clienteList">{{cedula.ci}}</option>
+    </select> -->
+    <div class="form-group">
+      <div class="row m-3">
+        <label for="" class="col"><b>Correo:</b> {{ correo }}</label>
+        <label for="" class="col"><b>Nombre:</b> {{ nombre }}</label>
+        <label for="" class="col"><b>Apellido:</b> {{ apellido }}</label>
+        <label for="" class="col"><b>C.I.:</b> {{ cedula }}</label>
+      </div>
+      
+    </div>
+    <table class="table ">
+      <thead>
+        <tr>
+          <th scope="col">TIPO DE PRENDA</th>
+          <th scope="col">COSTO UNITARIO</th>
+          <th scope="col">DESCUENTO</th>
+          <th scope="col">CANTIDAD</th>
+          <th scope="col">COSTO TOTAL</th>
+          <th scope="col">MODELO</th>
+          <th scope="col">PRECIO CON DESCUENTO</th>
+          <th scope="col">COSTO TOTAL CON DESCUENTO</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+        <tr *ngFor="let catalogoLista of catList">
+          <td>{{ catalogoLista.tipo }}</td>
+          <td>{{ catalogoLista.precio }}</td>
+          <td>{{ catalogoLista.descuento }}</td>
+          <td>{{ catalogoLista.cantidad }}</td>
+          <td>{{ catalogoLista.costoTotal }}</td>
+          <td>
+            <img src="{{ catalogoLista.imagen1 }}" alt="" width="70" height="70">
+          </td>
+          <td>{{ catalogoLista.precioDescuento }}</td>
+          <td>{{ catalogoLista.costoDescuento }}</td>
+          <!-- <td>
+            <img
+              src="{{ itemRegistro.modelo }}"
+              alt=""
+              id=""
+              width="70"
+              height="70"
+            />
+          </td> -->
+          <!-- <td>{{ itemRegistro.color }}</td> -->
+          <!-- <a
+                class="btn btn-secondary text-white"
+                (click)="onEdit(itemRegistro)"
+                data-toggle="modal"
+                data-target="#exampleModalScrollable"
+              >
+                <i class="fas fa-edit"></i>
+              </a>
+              <a
+                class="btn btn-danger text-white"
+                (click)="onDelete(itemRegistro.$key)"
+              >
+                <i class="fas fa-trash-alt"></i>
+              </a> -->
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <th>Total</th>
+          <th></th>
+          <th></th>
+          <th>{{totalCantidad}}</th>
+          <th>{{ totalPagar}}Bs.</th>
+          <th></th>
+          <th>{{ totalDescuento}}Bs.</th>
+          <th>{{ costoTotalDescuento}}Bs.</th>
+          <th></th>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,101 @@
+<div clase="card">
+  <div class="card-body">
+    <h3 class="text-center">
+      FLUJO DE CAJA
+    </h3>
+    <div class="row m-3">
+      <div class="col">
+        <button class="btn btn-outline-success  m-3" (click)="generarReporte()">
+          Generar Reporte
+        </button>
+      </div>
+      <div class="col">
+        <div>
+          <label for="">Fecha inicio:</label>
+        </div>
+        <input
+          type="date"
+          name=""
+          id=""
+          [(max)]="fechaLimite"
+          (change)="eventoFechaInicio($event)"
+          required
+        />
+      </div>
+      <div class="col">
+        <div>
+          <label for="">Fecha fin:</label>
+        </div>
+        <input
+          type="date"
+          name=""
+          id=""
+          min="2013-01-01"
+          [(value)]="fechaActual"
+          [(max)]="fechaActual"
+          (change)="eventoFechaFinal($event)"
+          required
+        />
+      </div>
+      <!-- <div class="col">
+        <input type="button" value="Mostrar todo" (click)="mostrandoDatosEntreFechas(cajaForm)">
+      </div> -->
+
+      <!-- <div class="col">
+        <div>
+          <label for="">Búsqueda</label>
+        </div>
+        <input type="text" name="filterCaja" placeholder="Filtrar" [(ngModel)]="filterCaja" />
+      </div> -->
+    </div>
+    <table class="table text-center">
+      <thead>
+        <tr>
+          <th scope="col">INGRESOS (Bs.)</th>
+          <th scope="col">GASTOS (Bs.)</th>
+          <th scope="col">GLOSA</th>
+          <th scope="col">FECHA</th>
+          <th scope="col">PERSONAL</th>
+          <!-- <th scope="col">EVENTOS</th> -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cajas of cajaList | caja: filterCaja">
+          <td>{{ cajas.ingreso }}</td>
+          <td>{{ cajas.salida }}</td>
+          <td>{{ cajas.glosa }}</td>
+          <td>{{ cajas.fecha }}</td>
+          <td>{{ cajas.personal }}</td>
+
+          <!-- <a
+            class="btn btn-secondary text-white"
+            (click)="onEdit(caja)"
+            data-toggle="modal"
+            data-target="#exampleModalScrollable"
+          >
+            <i class="fas fa-edit"></i>
+          </a>
+          <a class="btn btn-danger text-white" (click)="onDelete(caja.$key)">
+            <i class="fas fa-trash-alt"></i>
+          </a> -->
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <th>{{totalIngreso}}</th>
+          <th>{{totalSalida}}</th>
+          <th>Diferencia: {{diferenciaEntreTotalIngresoSalida}}</th>
+      </tr>
+
+      </tfoot>
+    </table>
+  </div>
+</div>
+
+<!-- <script type="text/javascript">
+  $(function () {
+      $('#datetimepicker11').datetimepicker({
+          daysOfWeekDisabled: [0, 6]
+      });
+  });
+</script> -->

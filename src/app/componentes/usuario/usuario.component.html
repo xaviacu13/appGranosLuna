@@ -1,0 +1,297 @@
+<!-- Button trigger modal -->
+
+<button
+  type="button"
+  class="btn btn-primary"
+  data-toggle="modal"
+  data-target="#exampleModalScrollable"
+>
+  <i class="fas fa-plus-circle"></i>
+  Agregar Usuario
+</button>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="exampleModalScrollable"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalScrollableTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title text-center" id="exampleModalScrollableTitle">
+          Registro de Usuarios
+        </h3>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Campos Obligatorios *</p>
+        <!--insumo insertar -->
+
+        <div class="card mt-5">
+          <div class="card-body">
+            <form #usuarioForm="ngForm" (ngSubmit)="onSubmit(usuarioForm)">
+              <input
+                type="hidden "
+                style="display:none"
+                name="$key"
+                #$key="ngModel"
+                [(ngModel)]="usuarioService.selectedUsuario.$key"
+              />
+
+              <div class="row">
+                <div class="col-md-4">
+                  <label for="">C.I. *</label>
+                  <select
+                    class="form-control"
+                    name="ci"
+                    #ci="ngModel"
+                    [(ngModel)]="usuarioService.selectedUsuario.ci"
+                    required
+                  >
+                    <option [selected]="true" [ngValue]="undefined"
+                      >--Seleccione--</option
+                    >
+                    <option
+                      value="{{ personal.ci }}"
+                      *ngFor="let personal of personalList"
+                      >{{ personal.ci }}</option
+                    >
+                  </select>
+                  <div class="row">
+                    <div
+                      class="text-danger col"
+                      *ngIf="ci.errors && (ci.dirty || ci.touched)"
+                    >
+                      <p [hidden]="!ci.errors.required">
+                        Campo requerido.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group col">
+                  <label for="">Correo Electrónico *</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    name="correo"
+                    #correo="ngModel"
+                    [(ngModel)]="usuarioService.selectedUsuario.correo"
+                    placeholder="Agregar Correo"
+                    required
+                    maxlength="70"
+                    minlength="10"
+                  />
+                  <div class="row">
+                    <div *ngIf="correo.value != undefined" class="col">
+                      <p>Max: {{ correo.value.length }}/70</p>
+                    </div>
+
+                    <div
+                      class="text-danger col"
+                      *ngIf="correo.errors && (correo.dirty || correo.touched)"
+                    >
+                      <p [hidden]="!correo.errors.required">
+                        Campo requerido.
+                      </p>
+                      <p *ngIf="correo.errors?.minlength">
+                        Mínimo 10 caracteres
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <label for="">Contraseña:</label>
+              <div class="form-group">
+                <input
+                  type="password"
+                  class="form-control"
+                  name="pass"
+                  id="pass"
+                  #pass="ngModel"
+                  [(ngModel)]="usuarioService.selectedUsuario.pass"
+                  placeholder="Agregar Contraseña"
+                  required
+                  maxlength="50"
+                  minlength="5"
+                />
+              </div>
+              <div class="row">
+                <div *ngIf="pass.value != undefined" class="col">
+                  <p>Max: {{ pass.value.length }}/50</p>
+                </div>
+
+                <div
+                  class="text-danger col"
+                  *ngIf="pass.errors && (pass.dirty || pass.touched)"
+                >
+                  <p [hidden]="!pass.errors.required">
+                    Campo requerido.
+                  </p>
+                  <p *ngIf="pass.errors?.minlength">
+                    Mínimo 5 caracteres
+                  </p>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="form-group col">
+                  <label for="">Repetir contraseña:</label>
+                  <input
+                    type="password"
+                    class="form-control"
+                    name="pass1"
+                    id="pass1"
+                    #pass1="ngModel"
+                    [(ngModel)]="usuarioService.selectedUsuario.pass1"
+                    placeholder="Repetir Contraseña"
+                    required
+                    maxlength="50"
+                    minlength="5"
+                    (input)="keypress($event.target.value)"
+                  />
+                  <div *ngIf="mensaje">
+                    <label for="">{{mensaje}}</label>
+                  </div>
+                  <div class="row">
+                    <div *ngIf="pass1.value != undefined" class="col">
+                      <p>Max: {{ pass1.value.length }}/50</p>
+                    </div>
+
+                    <div
+                      class="text-danger col"
+                      *ngIf="pass1.errors && (pass1.dirty || pass1.touched)"
+                    >
+                      <p [hidden]="!pass1.errors.required">
+                        Campo requerido.
+                      </p>
+                      <p *ngIf="pass1.errors?.minlength">
+                        Mínimo 5 caracteres
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="form-group col">
+                    <label for="">Nivel usuario:</label>
+                    <select
+                      class="form-control"
+                      name="nivel"
+                      #nivel="ngModel"
+                      [(ngModel)]="usuarioService.selectedUsuario.nivel"
+                      required
+                    >
+                      <option [selected]="true" [ngValue]="undefined"
+                        >--Seleccione--</option
+                      >
+                      <!-- <option value="Cliente">Cliente</option> -->
+                      <option value="Recepcionista">Recepcionista</option>
+                      <option value="Administrador">Administrador</option>
+                    </select>
+                    <div class="row">
+                      <div
+                        class="text-danger col"
+                        *ngIf="nivel.errors && (nivel.dirty || nivel.touched)"
+                      >
+                        <p [hidden]="!nivel.errors.required">
+                          Campo requerido.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="modal-footer">
+                <button
+                  class="btn btn-primary"
+                  type="submit"
+                  [disabled]="!usuarioForm.valid"
+                >
+                  <i class="fas fa-plus-circle"> Guardar </i>
+                </button>
+                <button
+                  class="btn btn-secondary "
+                  type="reset"
+                  (click)="resetForm(usuarioForm)"
+                >
+                  <i class=" fas fa sync-alt"> Limpiar </i>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!---->
+      </div>
+      <!-- <div class="modal-footer">
+        <button class="btn btn-primary" type="submit">
+          <i class="fas fa-plus-circle">Agregar </i>
+        </button>
+        <button
+          class="btn btn-secondary "
+          type="reset"
+          (click)="resetForm(usuarioForm)"
+        >
+          <i class=" fas fa sync-alt"> Limpiar </i>
+        </button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Close
+        </button>
+      </div> -->
+    </div>
+  </div>
+</div>
+
+<!--mostrar taabla-->
+
+<div clase="card">
+  <div class="card-body">
+    <h3 class="text-center">
+      LISTA DE USUARIOS
+    </h3>
+    <table class="table ">
+      <thead>
+        <tr>
+          <th scope="col">PERSONAL</th>
+          <th scope="col">CORREO</th>
+          <!-- <th scope="col">PASSWOD</th> -->
+          <th scope="col">NIVEL</th>
+          <th scope="col">EVENTOS</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let usuario of usuarioList">
+          <td>{{ usuario.ci }}</td>
+          <td>{{ usuario.correo }}</td>
+          <!-- <td>{{ usuario.pass }}</td> -->
+          <td>{{ usuario.nivel }}</td>
+          <a
+            class="btn btn-secondary text-white"
+            (click)="onEdit(usuario)"
+            data-toggle="modal"
+            data-target="#exampleModalScrollable"
+          >
+            <i class="fas fa-edit"></i>
+          </a>
+          <a class="btn btn-danger text-white" (click)="onDelete(usuario.$key)">
+            <i class="fas fa-trash-alt"></i>
+          </a>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

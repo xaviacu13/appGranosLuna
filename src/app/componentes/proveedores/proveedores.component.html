@@ -1,0 +1,324 @@
+<!-- Button trigger modal -->
+<form class="form-inline my-2 my-lg-0">
+  <button
+    type="button"
+    class="btn btn-primary"
+    data-toggle="modal"
+    data-target="#exampleModalScrollable"
+    (click)="resetForm()"
+  >
+    <i class="fas fa-plus-circle"></i>
+    Agregar Proveedor
+  </button>
+
+  <input
+    class="form-control mr-sm-2"
+    type="text"
+    name="filterPost"
+    placeholder="Buscar Proveedor"
+    aria-label="Search"
+    [(ngModel)]="filterPost"
+  />
+  <button
+    class="btn btn-outline-success my-2 my-sm-0"
+    (click)="generarReporte()"
+  >
+    Generar Reporte
+  </button>
+</form>
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="exampleModalScrollable"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalScrollableTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalScrollableTitle">
+          Registro de Proveedor
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <label for="">Campos Obligatorios *</label>
+        <!--insumo insertar -->
+        <div class="card mt-2">
+          <div class="card-body">
+            <form #proveedorForm="ngForm" (ngSubmit)="onSubmit(proveedorForm)">
+              <input
+                type="hidden "
+                style="display:none"
+                name="$key"
+                #$key="ngModel"
+                [(ngModel)]="proveedorService.selectedProveedor.$key"
+              />
+
+              <div class="row">
+                <div class="form-group col">
+                  <label for="">Nombre *</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="nombre"
+                    #nombre="ngModel"
+                    [(ngModel)]="proveedorService.selectedProveedor.nombre"
+                    placeholder="Nombre"
+                    required
+                    minlength="3"
+                    maxlength="50"
+                  />
+                  <div class="row">
+                    <div *ngIf="nombre.value != undefined" class="col">
+                      <p>Max: {{ nombre.value.length }}/50</p>
+                    </div>
+
+                    <div
+                      class="text-danger col"
+                      *ngIf="nombre.errors && (nombre.dirty || nombre.touched)"
+                    >
+                      <p [hidden]="!nombre.errors.required">
+                        Campo requerido.
+                      </p>
+                      <p *ngIf="nombre.errors?.minlength">
+                        Mínimo 3 caracteres
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col">
+                  <label for="">NIT *</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="nit"
+                    #nit="ngModel"
+                    [(ngModel)]="proveedorService.selectedProveedor.nit"
+                    placeholder="NIT"
+                    required
+                    minlength="3"
+                    maxlength="50"
+                  />
+                  <div class="row">
+                    <div *ngIf="nit.value != undefined" class="col">
+                      <p>Max: {{ nit.value.length }}/50</p>
+                    </div>
+
+                    <div
+                      class="text-danger col"
+                      *ngIf="nit.errors && (nit.dirty || nit.touched)"
+                    >
+                      <p [hidden]="!nit.errors.required">
+                        Campo requerido.
+                      </p>
+                      <p *ngIf="nit.errors?.minlength">
+                        Mínimo 3 caracteres
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="">Dirección</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="direccion"
+                  #direccion="ngModel"
+                  [(ngModel)]="proveedorService.selectedProveedor.direccion"
+                  placeholder="Dirección"
+                  maxlength="50"
+                />
+                <div *ngIf="direccion.value != undefined" class="col">
+                  <p>Max: {{ direccion.value.length }}/50</p>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="form-group col">
+                  <label for="">Teléfono</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="telefono"
+                    #telefono="ngModel"
+                    [(ngModel)]="proveedorService.selectedProveedor.telefono"
+                    placeholder="Teléfono"
+                    maxlength="50"
+                  />
+                  <div *ngIf="telefono.value != undefined" class="col">
+                    <p>Max: {{ telefono.value.length }}/50</p>
+                  </div>
+                </div>
+                <div class="form-group col">
+                  <label for="">Ciudad</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="city"
+                    #city="ngModel"
+                    [(ngModel)]="proveedorService.selectedProveedor.city"
+                    placeholder="Ciudad"
+                  />
+                  <div *ngIf="city.value != undefined" class="col">
+                    <p>Max: {{ city.value.length }}/50</p>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col">
+                  <label for="">Correo Electronico</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="email"
+                    #email="ngModel"
+                    [(ngModel)]="proveedorService.selectedProveedor.email"
+                    placeholder="Correo Electrónico"
+                    maxlength="50"
+                  />
+                  <div *ngIf="email.value != undefined" class="col">
+                    <p>Max: {{ email.value.length }}/50</p>
+                  </div>
+                </div>
+
+                <div class="form-group col">
+                  <label for="">Pagina Web</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="durl"
+                    #durl="ngModel"
+                    [(ngModel)]="proveedorService.selectedProveedor.durl"
+                    placeholder="Agregar Pagina Web"
+                    maxlength="50"
+                  />
+                  <div *ngIf="durl.value != undefined" class="col">
+                    <p>Max: {{ durl.value.length }}/50</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="modal-footer">
+                <button
+                  class="btn btn-primary"
+                  type="submit"
+                  [disabled]="!proveedorForm.valid"
+                >
+                  <i class="fas fa-plus-circle">Agregar </i>
+                </button>
+                <button
+                  class="btn btn-secondary "
+                  type="reset"
+                  (click)="resetForm(proveedorForm)"
+                >
+                  <i class=" fas fa sync-alt"> Limpiar </i>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!---->
+      </div>
+      <!-- <div class="modal-footer">
+          <button class ="btn btn-primary" type="submit">
+              <i class="fas fa-plus-circle">Agregar </i>
+
+          </button>
+          <button class="btn btn-secondary " type="reset" (click)="resetForm(proveedorForm)">
+              <i class=" fas fa sync-alt"> Limpiar </i>
+
+
+          </button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    
+      </div> -->
+    </div>
+  </div>
+</div>
+
+<!--mostrar taabla-->
+
+<div clase="card">
+  <div class="card-body">
+    <h2 class="text-center">LISTA DE PROVEEDOR</h2>
+
+    <table class="table ">
+      <thead>
+        <tr>
+          <th scope="col">NOMBRE</th>
+          <th scope="col">NIT</th>
+          <th scope="col">DIRECCION</th>
+          <th scope="col">TELEFONO</th>
+          <th scope="col">CIUDAD</th>
+          <th scope="col">EMAIL</th>
+          <th scope="col">DIRECCION WEB</th>
+          <th scope="col">Evento</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let proveedor of proveedorList | proveedorFilter: filterPost"
+        >
+          <td>{{ proveedor.nombre }}</td>
+          <td>{{ proveedor.nit }}</td>
+          <td>{{ proveedor.direccion }}</td>
+          <td>{{ proveedor.telefono }}</td>
+          <td>{{ proveedor.city }}</td>
+          <td>{{ proveedor.email }}</td>
+          <td>{{ proveedor.durl }}</td>
+          <a
+            class="btn btn-secondary text-white"
+            (click)="onEdit(proveedor)"
+            data-toggle="modal"
+            data-target="#exampleModalScrollable"
+          >
+            <i class="fas fa-edit"></i>
+          </a>
+          <a
+            class="btn btn-danger text-white"
+            (click)="onDelete(proveedor.$key)"
+          >
+            <i class="fas fa-trash-alt"></i>
+          </a>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<!---->
+
+<!--
+<table class="table table-striped">
+      <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>{{personal.nombre}}</td>
+      <td>{{personal.apellido}}</td>
+      <td>{{personal.ci}}</td>
+      <td>{{personal.expedicion}}</td>
+      <td>
+        <a class="btn btn-secondary text-white" (click)="onEdit(Personal)">
+          <i class="fas fa-edit"></i>
+        </a>
+        <a class="btn btn-danger text-white" (click)="onDelete(Personal.$key)">
+            <i class="fas fa-trash-alt"></i>
+          </a>
+      </td>
+    
+    </tr>
+    
+  </tbody>
+</table>
+-->

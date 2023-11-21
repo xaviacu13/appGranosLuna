@@ -1,0 +1,299 @@
+<!-- Button trigger modal -->
+<form class="form-inline my-2 my-lg-0">
+  <button
+    type="button"
+    class="btn btn-primary"
+    data-toggle="modal"
+    data-target="#exampleModalScrollable"
+    (click)="resetForm()"
+  >
+    <i class="fas fa-plus-circle"></i>
+    Agregar Insumo
+  </button>
+
+  <input
+    class="form-control mr-sm-2"
+    type="text"
+    name="filterPost"
+    placeholder="Buscar Insumo"
+    aria-label="Search"
+    [(ngModel)]="filterPost"
+  />
+  <button
+    class="btn btn-outline-success my-2 my-sm-0"
+    (click)="generarReporte()"
+  >
+    Generar Reporte
+  </button>
+</form>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="exampleModalScrollable"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalScrollableTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalScrollableTitle">
+          Registro de Insumo
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!--insumo insertar -->
+        <label for="">Campos Obligatorios *</label>
+        <div class="card mt-5">
+          <div class="card-body">
+            <form
+              #insumoForm="ngForm"
+              (ngSubmit)="onSubmit(insumoForm, almacen)"
+            >
+              <input
+                type="hidden "
+                style="display:none"
+                name="$key"
+                #$key="ngModel"
+                [(ngModel)]="insumoService.selectedInsumo.$key"
+              />
+              <div>
+                <div class="m-3">
+                  <div class="row m-3">
+                    <label for="">Imagen de Insumo *</label>
+                  </div>
+                  <!-- <img [src]="imgSrc" *ngIf="imgSrc" width="100" height="120" /> -->
+                  <div *ngIf="imgSrc" class="image_wrapper row" id="img1">
+                    <img
+                      name="imagen"
+                      [src]="imgSrc"
+                      #image
+                      width="100"
+                      height="120"
+                      (click)="deletImg(image.src)"
+                      required
+                    />
+                    <button type="button" class="remove" (click)="deletImg()">
+                      <i class="fas fa-minus-circle"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <input
+                    type="file"
+                    placeholder="Imagen"
+                    (change)="uploadFile1($event)"
+                    #fileUploader
+                    required
+                  />
+                  <!-- #imagen="ngModel"
+                  [(ngModel)]="insumoService.selectedInsumo.imagen" -->
+                </div>
+                <div class="progress">
+                  <div
+                    class="progress-bar progress-bar-striped bg-success"
+                    role="progressbar"
+                    [style.width]="(uploadPercent | async) + '%'"
+                  ></div>
+                </div>
+                <input
+                  id="urlImageValue"
+                  type="hidden"
+                  name=""
+                  [value]="urlImage | async"
+                />
+              </div>
+              <div class="row">
+                <div class="form-group col">
+                  <label for="">Detalle *</label>
+                  <input
+                    id="destalleInput"
+                    type="text"
+                    class="form-control"
+                    name="detalle"
+                    #detalle="ngModel"
+                    [(ngModel)]="insumoService.selectedInsumo.detalle"
+                    placeholder="Detalle"
+                    required
+                    maxlength="50"
+                    minlength="3"
+                  />
+                  <div class="row">
+                    <div *ngIf="detalle.value != undefined" class="col">
+                      <p>Max: {{ detalle.value.length }}/50</p>
+                    </div>
+
+                    <div
+                      class="text-danger col"
+                      *ngIf="
+                        detalle.errors && (detalle.dirty || detalle.touched)
+                      "
+                    >
+                      <p [hidden]="!detalle.errors.required">
+                        Campo requerido.
+                      </p>
+                      <p *ngIf="detalle.errors?.minlength">
+                        Mínimo 3 caracteres
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col-md-5">
+                  <label for="">Unidad *</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="unidadMedida"
+                    #unidadMedida="ngModel"
+                    [(ngModel)]="insumoService.selectedInsumo.unidadMedida"
+                    placeholder="Unidad de Medida"
+                    required
+                    maxlength="50"
+                    minlength="3"
+                  />
+                  <div class="row">
+                    <div *ngIf="unidadMedida.value != undefined" class="col">
+                      <p>Max: {{ unidadMedida.value.length }}/50</p>
+                    </div>
+
+                    <div
+                      class="text-danger col"
+                      *ngIf="
+                        unidadMedida.errors &&
+                        (unidadMedida.dirty || unidadMedida.touched)
+                      "
+                    >
+                      <p [hidden]="!unidadMedida.errors.required">
+                        Campo requerido.
+                      </p>
+                      <p *ngIf="unidadMedida.errors?.minlength">
+                        Mínimo 3 caracteres
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="">Color *</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="color"
+                  #color="ngModel"
+                  [(ngModel)]="insumoService.selectedInsumo.color"
+                  placeholder="Color del Articulo"
+                  required
+                  maxlength="50"
+                  minlength="3"
+                />
+                <div class="row">
+                  <div *ngIf="color.value != undefined" class="col">
+                    <p>Max: {{ color.value.length }}/50</p>
+                  </div>
+
+                  <div
+                    class="text-danger col"
+                    *ngIf="color.errors && (color.dirty || color.touched)"
+                  >
+                    <p [hidden]="!color.errors.required">
+                      Campo requerido.
+                    </p>
+                    <p *ngIf="color.errors?.minlength">
+                      Mínimo 3 caracteres
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <label for="">Observacion</label>
+              <div class="form-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  name="obs"
+                  #obs="ngModel"
+                  [(ngModel)]="insumoService.selectedInsumo.obs"
+                  placeholder="Observacion"
+                  maxlength="50"
+                />
+                <div class="row">
+                  <div *ngIf="obs.value != undefined" class="col">
+                    <p>Max: {{ obs.value.length }}/50</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="modal-footer">
+                <button
+                  [disabled]="!insumoForm.valid"
+                  class="btn btn-primary"
+                  type="submit"
+                >
+                  <i class="fas fa-plus-circle">Agregar </i>
+                </button>
+                <button
+                  class="btn btn-secondary "
+                  type="reset"
+                  (click)="resetForm(InsumoForm)"
+                >
+                  <i class=" fas fa sync-alt"> Limpiar </i>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--mostrar taabla-->
+<div clase="card">
+  <div class="card-body">
+    <h2 class="text-center">LISTA DE INSUMOS</h2>
+    <table class="table ">
+      <thead>
+        <tr>
+          <th scope="col">DETALLE</th>
+          <th scope="col">UNIDAD DE MEDIDA</th>
+          <th scope="col">COLOR</th>
+          <th scope="col">IMAGEN</th>
+          <th scope="col">OBSERVACION</th>
+          <th scope="col">ACCION</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let insumo of insumoList | insumoFilter: filterPost">
+          <td>{{ insumo.detalle }}</td>
+          <td>{{ insumo.unidadMedida }}</td>
+          <td>{{ insumo.color }}</td>
+          <td>
+            <img src="{{ insumo.imagen }}" alt="" width="70" height="70" />
+          </td>
+          <td>{{ insumo.obs }}</td>
+          <a
+            class="btn btn-secondary text-white"
+            (click)="onEdit(insumo)"
+            data-toggle="modal"
+            data-target="#exampleModalScrollable"
+          >
+            <i class="fas fa-edit"></i>
+          </a>
+          <a class="btn btn-danger text-white" (click)="onDelete(insumo.$key)">
+            <i class="fas fa-trash-alt"></i>
+          </a>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,491 @@
+<!-- Button trigger modal -->
+<form class="form-inline my-2 my-lg-0">
+  <button
+    *ngIf="nivel"
+    type="button"
+    class="btn btn-primary"
+    data-toggle="modal"
+    data-target="#exampleModalScrollable"
+    (click)="resetForm()"
+  >
+    <i class="fas fa-plus-circle"></i>
+    Agregar Personal
+  </button>
+  &nbsp;&nbsp;
+  <input
+    *ngIf="nivel"
+    class="form-control mr-sm-2"
+    type="text"
+    name="filterPost"
+    placeholder="Buscar Personal"
+    aria-label="Search"
+    [(ngModel)]="filterPost"
+  />
+  <button
+    *ngIf="nivel"
+    class="btn btn-outline-success my-2 my-sm-0"
+    type="button"
+    (click)="generarReporte()"
+  >
+    Generar Reporte
+  </button>
+</form>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="exampleModalScrollable"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalScrollableTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalScrollableTitle">
+          Registro de Personal
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Campos Obligatorios *</p>
+        <!--personal insertar -->
+        <div class="card mt-5">
+          <div class="card-body">
+            <form
+              #personalForm="ngForm"
+              (ngSubmit)="onSubmit(personalForm)"
+              name="personalForm"
+            >
+              <div class="row">
+                <input
+                  type="hidden "
+                  style="display:none"
+                  name="$key"
+                  #$key="ngModel"
+                  [(ngModel)]="personalService.selectedPersonal.$key"
+                />
+                <div>
+                <div class="row m-3">
+                  <label for="">Foto de Perfil:</label>
+                </div>
+                <div *ngIf="imgSrc" class="image_wrapper row" id="img1">
+                  <img
+                    name="perfil"
+                    [src]="imgSrc"
+                    #image
+                    width="100"
+                    height="120"
+                    (click)="deletImg(image.src)"
+                    required
+                  />
+                  <!-- <img src="more24x24.png" title="agregar" class="add" /> -->
+                  <!-- <img src="less24x24.png" title="eliminar" class="remove" /> -->
+                  <button type="button" class="remove" (click)="deletImg()">
+                    <i class="fas fa-minus-circle"></i>
+                  </button>
+                </div>
+
+                <div class="m-3">
+                  <!-- [(ngModel)]="personalService.selectedPersonal.perfil"
+                  #perfil="ngModel" -->
+                  <input
+                    type="file"
+                    placeholder="Agregar Perfil"
+                    (change)="uploadFile1($event)"
+                    #fileUploader
+                    required
+                  />
+                  <!-- [(ngModel)]="personalService.selectedPersonal.perfil"
+                  #perfil="ngModel"
+                  name="file" -->
+                  <!-- class="inputfile row"
+                    id="file" -->
+                  <div class="progress m-2">
+                    <div
+                      class="progress-bar progress-bar-striped bg-success"
+                      role="progressbar"
+                      [style.width]="(uploadPercent | async) + '%'"
+                      id="progresoExitoso"
+                      value="true"
+                    ></div>
+                  </div>
+                </div>
+              </div>
+
+                <div class="form-group col">
+                  <label>Nombre *</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="nombre"
+                    #nombre="ngModel"
+                    [(ngModel)]="personalService.selectedPersonal.nombre"
+                    placeholder="Nombre"
+                    required
+                    maxlength="50"
+                    minlength="3"
+                  />
+
+                  <div class="row">
+                    <div *ngIf="nombre.value != undefined" class="col">
+                      <p>Max: {{ nombre.value.length }}/50</p>
+                    </div>
+
+                    <div
+                      class="text-danger col"
+                      *ngIf="nombre.errors && (nombre.dirty || nombre.touched)"
+                    >
+                      <p [hidden]="!nombre.errors.required">
+                        Campo requerido.
+                      </p>
+                      <p *ngIf="nombre.errors?.minlength">
+                        Mínimo 3 caracteres
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col">
+                  <label for="">Apellido</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="apellido"
+                    #apellido="ngModel"
+                    [(ngModel)]="personalService.selectedPersonal.apellido"
+                    placeholder="Apellido"
+                  />
+                </div>
+                <div class="form-group col">
+                  <label for="">Cedula de Identidad *</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="ci"
+                    #ci="ngModel"
+                    [(ngModel)]="personalService.selectedPersonal.ci"
+                    placeholder="Cedula de Identidad"
+                    required
+                    minlength="7"
+                    maxlength="10"
+                  />
+                  <div class="row">
+                    <div *ngIf="ci.value != undefined" class="col">
+                      <p>Max: {{ ci.value.length }}/10</p>
+                    </div>
+
+                    <div
+                      class="text-danger col"
+                      *ngIf="ci.errors && (ci.dirty || ci.touched)"
+                    >
+                      <p [hidden]="!ci.errors.required">
+                        Campo requerido.
+                      </p>
+                      <p *ngIf="ci.errors?.minlength">
+                        Mínimo 7 caracteres
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <label>Lugar de Expedicion *</label>
+                  <div class="input-group mb-3">
+                    <select
+                      class="form-control"
+                      placeholder="Lugar"
+                      name="expedicion"
+                      id="expedicion"
+                      #expedicion="ngModel"
+                      [(ngModel)]="personalService.selectedPersonal.expedicion"
+                      required
+                    >
+                      <option [selected]="true" [ngValue]="undefined"
+                        >--Seleccione--</option
+                      >
+                      <option>BENI</option>
+                      <option>CHUQUISACA</option>
+                      <option>COCHABAMBA</option>
+                      <option>LA PAZ</option>
+                      <option>ORURO</option>
+                      <option>PANDO</option>
+                      <option>POTOSI</option>
+                      <option>SANTA CRUZ</option>
+                      <option>TARIJA</option>
+                    </select>
+                  </div>
+                  <div class="row">
+                    <div
+                      class="text-danger col"
+                      *ngIf="
+                        expedicion.errors &&
+                        (expedicion.dirty || expedicion.touched)
+                      "
+                    >
+                      <p [hidden]="!expedicion.errors.required">
+                        Campo requerido.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group col">
+                  <label for="">Fecha de Nacimiento *</label>
+                  <input
+                    type="date"
+                    class="form-control"
+                    name="fechaNacimiento"
+                    #fechaNacimiento="ngModel"
+                    [(ngModel)]="
+                      personalService.selectedPersonal.fechaNacimiento
+                    "
+                    placeholder="Agregar Fecha de Nacimiento"
+                    required
+                  />
+                  <div class="row">
+                    <div
+                      class="text-danger col"
+                      *ngIf="
+                        fechaNacimiento.errors &&
+                        (fechaNacimiento.dirty || fechaNacimiento.touched)
+                      "
+                    >
+                      <p [hidden]="!fechaNacimiento.errors.required">
+                        Campo requerido.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group col">
+                  <label for="">Telefono</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="telefono"
+                    #telefono="ngModel"
+                    [(ngModel)]="personalService.selectedPersonal.telefono"
+                    placeholder="Teléfono"
+                    maxlength="10"
+                  />
+                  <div class="row">
+                    <div *ngIf="telefono.value != undefined" class="col">
+                      <p>Max: {{ telefono.value.length }}/10</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col">
+                  <label>Seleccionar Sexo *</label>
+                  <div class="input-group mb-3">
+                    <select
+                      class="form-control"
+                      name="sexo"
+                      #sexo="ngModel"
+                      [(ngModel)]="personalService.selectedPersonal.sexo"
+                      required
+                    >
+                      <option [selected]="true" [ngValue]="undefined"
+                        >--Seleccione--</option
+                      >
+                      <option>MASCULINO</option>
+                      <option>FEMENINO</option>
+                    </select>
+                  </div>
+                  <div class="row">
+                    <div
+                      class="text-danger col"
+                      *ngIf="sexo.errors && (sexo.dirty || sexo.touched)"
+                    >
+                      <p [hidden]="!sexo.errors.required">
+                        Campo requerido.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group col">
+                  <label for="">Cargo Personal *</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="cargo"
+                    #cargo="ngModel"
+                    [(ngModel)]="personalService.selectedPersonal.cargo"
+                    placeholder="Cargo del Personal"
+                    required
+                    maxlength="50"
+                    minlength="3"
+                  />
+                  <div class="row">
+                    <div *ngIf="cargo.value != undefined" class="col">
+                      <p>Max: {{ cargo.value.length }}/50</p>
+                    </div>
+
+                    <div
+                      class="text-danger col"
+                      *ngIf="cargo.errors && (cargo.dirty || cargo.touched)"
+                    >
+                      <p [hidden]="!cargo.errors.required">
+                        Campo requerido.
+                      </p>
+                      <p *ngIf="cargo.errors?.minlength">
+                        Mínimo 3 caracteres
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group col">
+                  <label for="">Correo electronico</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="email"
+                    #email="ngModel"
+                    [(ngModel)]="personalService.selectedPersonal.email"
+                    placeholder="Correo Electrónico"
+                    maxlength="70"
+                  />
+                  <div class="row">
+                    <div *ngIf="email.value != undefined" class="col">
+                      <p>Max: {{ email.value.length }}/70</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="m-3"></div>
+              <div class="form-group row">
+                <div class="form-group col">
+                  <label for="">Dirección</label>
+                  <textarea
+                    type="text"
+                    class="form-control"
+                    name="direccion"
+                    #direccion="ngModel"
+                    [(ngModel)]="personalService.selectedPersonal.direccion"
+                    placeholder="Dirección"
+                    maxlength="50"
+                  ></textarea>
+                  <div *ngIf="direccion.value != undefined" class="col">
+                    <p>Max: {{ direccion.value.length }}/50</p>
+                  </div>
+                </div>
+                <div class="col">
+                  <!-- <img [src]="imgSrc" *ngIf="imgSrc" width="100" height="120" /> -->
+                  <!-- *ngIf="personalService.selectedPersonal.perfil" -->
+                  <!-- <div>
+                    <img
+                      *ngIf="imgSrc"
+                      name="perfil"
+                      [src]="imgSrc"
+                      #image
+                      width="100"
+                      height="120"
+                      (click)="deletImg(image.src)"
+                    />
+                  </div> -->
+                </div>
+              </div>
+              <input
+                id="urlImageValue"
+                type="hidden"
+                name=""
+                [value]="urlImage | async"
+              />
+
+              <div class="modal-footer">
+                <button
+                  [disabled]="!personalForm.valid"
+                  class="btn btn-primary"
+                  type="submit"
+                >
+                  <i class="fas fa-plus-circle">Agregar</i>
+                </button>
+
+                <button
+                  class="btn btn-secondary "
+                  type="reset"
+                  (click)="resetForm(PersonalForm)"
+                >
+                  <i class=" fas fa sync-alt"> Limpiar </i>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--mostrar taabla-->
+<div clase="card">
+  <div class="card-body">
+    <h2 class="text-center">LISTA DE PERSONAL</h2>
+    <table class="table ">
+      <thead>
+        <tr>
+          <th scope="col">NOMBRE</th>
+          <th scope="col">APELLIDO</th>
+          <th *ngIf="nivel" scope="col">CI</th>
+          <th *ngIf="nivel" scope="col">EXPEDICION</th>
+          <th scope="col">FECHA_N.</th>
+          <th scope="col">TELEFONO</th>
+          <th *ngIf="nivel" scope="col">DIRECCION</th>
+          <th scope="col">SEXO</th>
+          <th scope="col">CARGO</th>
+          <th scope="col">EMAIL</th>
+          <th scope="col">PERFIL</th>
+          <th *ngIf="nivel" scope="col">ACCION</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let personal of personaList | personalFilter: filterPost">
+          <td>{{ personal.nombre }}</td>
+          <td>{{ personal.apellido }}</td>
+          <td *ngIf="nivel">{{ personal.ci }}</td>
+          <td *ngIf="nivel">{{ personal.expedicion }}</td>
+          <td>{{ personal.fechaNacimiento }}</td>
+          <td>{{ personal.telefono }}</td>
+          <td *ngIf="nivel">{{ personal.direccion }}</td>
+          <td>{{ personal.sexo }}</td>
+          <td>{{ personal.cargo }}</td>
+          <td>{{ personal.email }}</td>
+          <td>
+            <img src="{{ personal.perfil }}" alt="" width="70" height="70" />
+          </td>
+
+          <a
+            *ngIf="nivel"
+            class="btn btn-secondary text-white"
+            (click)="onEdit(personal)"
+            data-toggle="modal"
+            data-target="#exampleModalScrollable"
+          >
+            <i class="fas fa-edit"></i>
+          </a>
+          <a
+            *ngIf="nivel"
+            class="btn btn-danger text-white"
+            (click)="onDelete(personal.$key)"
+          >
+            <i class="fas fa-trash-alt"></i>
+          </a>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

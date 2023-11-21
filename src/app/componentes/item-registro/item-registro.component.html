@@ -1,0 +1,348 @@
+<!-- Button trigger modal -->
+<!-- Button trigger modal -->
+<form class="form-inline my-2 my-lg-0">
+  <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalScrollable">
+            <i class="fas fa-plus-circle"></i>
+            Agregar Item Registro
+        </button> -->
+  <!--         
+            <input class="form-control mr-sm-2" type="text" name="filterPost" placeholder="Buscar Item Registro" aria-label="Search" [(ngModel)]="filterPost">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button> -->
+</form>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="exampleModalScrollable"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalScrollableTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalScrollableTitle">
+          Lista de Pedidos
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!--insumo insertar -->
+
+        <div class="card mt-5">
+          <div class="card-body">
+            <form
+              #itemRegistroForm="ngForm"
+              (ngSubmit)="onSubmit(itemRegistroForm)"
+            >
+              <input
+                type="hidden "
+                style="display:none"
+                name="$key"
+                #$key="ngModel"
+                [(ngModel)]="itemRegistroService.selectedItemRegistro.$key"
+              />
+              <div class="row">
+                <div class="form-group col">
+                  <label for="">CODIGO</label>
+                  <div>
+                    <!-- <label for="">
+                      {{ ciCliente }}
+                    </label> -->
+                  </div>
+                  <input
+                  id="idRegistro"
+                    type="text"
+                    class="form-control"
+                    name="idRegistro"
+                    #idRegistro="ngModel"
+                    [(ngModel)]="
+                      itemRegistroService.selectedItemRegistro.idRegistro
+                    "
+                    placeholder="Codigo de Registro"
+                    value="{{ciCliente}}"
+                    disabled="true"
+                  />
+                </div>
+
+                <!-- cliente -->
+                <!-- <label>Agregar Articulo </label>
+<select name="nombre" class="custom-select" id="nombre"
+#nombre="ngModel"
+      [(ngModel)]="compraService.selectedCompra.descripcion">
+<option  *ngFor="let insumo of detalle" [value]="insumo.detalle">
+  {{insumo.detalle}}</option>
+</select> -->
+
+                <div class="form-group col">
+                  <label for="">DESCRIPCION DE LA PRENDA</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="prenda"
+                    #prendaa="ngModel"
+                    [(ngModel)]="
+                      itemRegistroService.selectedItemRegistro.prenda
+                    "
+                    placeholder="Agregar Descripcion de la Penda"
+                  />
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col">
+                  <label for="">CANTIDAD</label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    name="cantidad"
+                    #cantidad="ngModel"
+                    [(ngModel)]="
+                      itemRegistroService.selectedItemRegistro.cantidad
+                    "
+                    placeholder="Agregar Cantidad"
+                  />
+                </div>
+
+                <div class="form-group col">
+                  <label for="">COSTO UNITARIO</label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    name="costoUnitario"
+                    #costoUnitario="ngModel"
+                    [(ngModel)]="
+                      itemRegistroService.selectedItemRegistro.costoUnitario
+                    "
+                    placeholder="Agredar Costo Unitario"
+                  />
+                </div>
+              </div>
+
+              <!-- <div class="form-group">
+                                                    <input
+                                                    value="{{ct}}"
+                                                    type="text"
+                                                    name="costoTotal"
+                                                    > -->
+              <!-- class="form-control"
+                                                    name="costoTotal"
+                                                    #costoTotal="ngModel"
+                                                    [(ngModel)]="itemRegistroService.selectedItemRegistro.costoTotal" -->
+              <!-- placeholder="costo total" -->
+              <!-- </div> -->
+              <div class="m-3">
+                <img [src]="imgSrc" *ngIf="imgSrc" width="100" height="120"/>
+              </div>
+              <div class="form-group col">
+                <label for="">MODELO</label>
+                <input
+                  type="file"
+                  class="form-control"
+                  name="modelo"
+                  #modelo="ngModel"
+                  [(ngModel)]="itemRegistroService.selectedItemRegistro.modelo"
+                  placeholder="Agregar Modelo de la Prenda"
+                  (change)="uploadFile1($event)"
+                />
+              </div>
+              <div class="progress">
+                <div class="progress-bar progress-bar-striped bg-success" role="progressbar" [style.width]="(uploadPercent | async) + '%'">
+
+                </div>
+              </div>
+              <input id="urlImageValue" type="hidden" name="" [value]="urlImage | async">
+
+              <div class="form-group col">
+                <label for="">COLOR</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="color"
+                  #color="ngModel"
+                  [(ngModel)]="itemRegistroService.selectedItemRegistro.color"
+                  placeholder="Agregar Color de la Prenda"
+                />
+              </div>
+
+              <div class="row">
+                <!--                                               
+                                               
+                                                <div class="form-group col">
+                                                        <input
+                                                        type="text"
+                                                        class="form-control"
+                                                        name="descripcion"
+                                                        #descripcion="ngModel"
+                                                        [(ngModel)]="itemRegistroService.selectedItemRegistro.descripcion"
+                                                        placeholder="Agregar Decripcion"
+                                                        >
+                                                </div> -->
+              </div>
+
+              <div class="modal-footer">
+                <button class="btn btn-primary" type="submit">
+                  <i class="fas fa-plus-circle">Agregar </i>
+                </button>
+                <button
+                  class="btn btn-secondary "
+                  type="reset"
+                  (click)="resetForm(itemRegistroForm)"
+                >
+                  <i class=" fas fa sync-alt"> Limpiar </i>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!---->
+      </div>
+      <!-- <div class="modal-footer">
+                      <button class ="btn btn-primary" type="submit">
+                          <i class="fas fa-plus-circle">Agregar </i>
+          
+                      </button>
+                      <button class="btn btn-secondary " type="reset" (click)="resetForm(itemRegistroForm)">
+                          <i class=" fas fa sync-alt"> Limpiar </i>
+          
+          
+                      </button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                
+                  </div> -->
+    </div>
+  </div>
+</div>
+
+<!--mostrar taabla-->
+
+<div clase="card">
+  <div class="card-body">
+    <h3 class="text-center">
+      ITEM REGISTRO
+    </h3>
+      <table class="table ">
+        <thead>
+          <tr>
+            <th scope="col">CLIENTE</th>
+            <th scope="col">SUCURSAL</th>
+            <th scope="col">PERSONAL</th>
+            <th scope="col">FECHA ENTREGADA</th>
+            <th scope="col">FECHA LIMITE</th>
+            <th scope="col">COSTO TOTAL</th>
+            <th scope="col">ADELANTO</th>
+            <th scope="col">SALDO</th>
+            <th scope="col">VER</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let itemRegistro of pedidoList">
+            <td>{{ itemRegistro.cliente }}</td>
+            <td>{{ itemRegistro.sucursal }}</td>
+            <td>{{ itemRegistro.personal }}</td>
+            <td>{{ itemRegistro.fechaRegistro }}</td>
+            <td>{{ itemRegistro.fechaLimite }}</td>
+            <td>{{ itemRegistro.costoTotal }}</td>
+            <td>{{ itemRegistro.adelanto }}</td>
+            <td>{{ itemRegistro.saldo }}</td>
+            <!-- <a
+              class="btn btn-secondary text-white"
+              (click)="onEdit(itemRegistro)"
+              data-toggle="modal"
+              data-target="#exampleModalScrollable"
+            >
+              <i class="fas fa-edit"></i>
+            </a> -->
+            <a
+              class="btn btn-primary text-white"
+              (click)="verDatos(itemRegistro.cliente)"
+              data-toggle="modal" data-target="#exampleModal"
+              >
+              <!-- (click)="onDelete(itemRegistro.$key)" -->
+            Ver
+              <!-- <i class="fas fa-trash-alt"></i> -->
+            </a>
+          </tr>
+        </tbody>
+      </table>
+  </div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document" >
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">LISTA DE REGISTRO DE PEDIDOS</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+
+        <table class="table ">
+          <thead>
+            <tr>
+              <th scope="col">ID REGISTRO</th>
+              <th scope="col">TIPO PRENDA</th>
+              <th scope="col">CANTIDAD</th>
+              <th scope="col">COSTO UNITARIO</th>
+              <th scope="col">COSTO TOTAL</th>
+              <th scope="col">MODELO</th>
+              <th scope="col">COLOR</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let itemRegistro of itemRegistroList">
+              <td>{{ itemRegistro.idRegistro }}</td>
+              <td>{{ itemRegistro.prenda }}</td>
+              <td>{{ itemRegistro.cantidad }}</td>
+              <td>{{ itemRegistro.costoUnitario }}</td>
+              <td>{{ itemRegistro.costoTotal }}</td>
+              <td><img src="{{ itemRegistro.modelo }}" alt="" width="100" height="120"></td>
+              <td>{{ itemRegistro.color }}</td>
+          </tbody>
+        </table>
+
+
+      </div>
+      <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div> -->
+    </div>
+  </div>
+</div>
+<!---->
+
+<!--
+          <table class="table table-striped">
+                  <tbody>
+                <tr>
+                  <th scope="row">1</th>
+                  <td>{{personal.nombre}}</td>
+                  <td>{{personal.apellido}}</td>
+                  <td>{{personal.ci}}</td>
+                  <td>{{personal.expedicion}}</td>
+                  <td>
+                    <a class="btn btn-secondary text-white" (click)="onEdit(Personal)">
+                      <i class="fas fa-edit"></i>
+                    </a>
+                    <a class="btn btn-danger text-white" (click)="onDelete(Personal.$key)">
+                        <i class="fas fa-trash-alt"></i>
+                      </a>
+                  </td>
+                
+                </tr>
+                
+              </tbody>
+            </table>
+          -->

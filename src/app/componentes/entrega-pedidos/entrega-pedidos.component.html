@@ -1,0 +1,416 @@
+<div>
+  <h5 class="modal-title text-center" id="exampleModalScrollableTitle" text>
+    ENTREGA DE PEDIDO
+  </h5>
+</div>
+
+<div class="card mt-2">
+  <div class="card-body">
+    <form #regPedidoForm="ngForm" (ngSubmit)="onSubmit(regPedidoForm)">
+      <label for="">Campos Obligatorios *</label>
+      <input
+        type="hidden "
+        style="display:none"
+        name="$key"
+        #$key="ngModel"
+        [(ngModel)]="regPedidoService.selectedRegPedido.$key"
+      />
+
+      <div class="form-group row">
+        <div class="col">
+          <label for="cliente">CLIENTE</label>
+
+          <select
+            name="cliente"
+            class="custom-select"
+            id="cliente"
+            #cliente="ngModel"
+            (change)="datosCliente($event.target.value)"
+            [(ngModel)]="regPedidoService.selectedRegPedido.cliente"
+            required
+          >
+            <option selected value="">Seleccione un C.I. *</option>
+            <option *ngFor="let cliente of ciCliente"> {{ cliente.ci }}</option>
+          </select>
+          <div>
+            <div *ngIf="ciClient" class="col mt-3">
+              <div class="row">
+                <label for=""> <b>Nombre: </b> {{ nameClient }}</label>
+              </div>
+              <div class="row">
+                <label for=""> <b>Apellido: </b> {{ apellidosClient }}</label>
+              </div>
+              <div class="row">
+                <label for="">
+                  <b>Cedula de Identidad: </b> {{ ciClient }}</label
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <label for="sucursal">FECHA PEDIDO</label>
+          <div *ngIf="fechaPedido">
+            <label for="">{{ fechaPedido }}</label>
+          </div>
+        </div>
+        <div class="col">
+          <label for="sucursal">FECHA LIMITE</label>
+          <div *ngIf="fechaLimite">
+            <label for="">{{ fechaLimite }}</label>
+          </div>
+        </div>
+        <div class="col">
+          <label for="sucursal">FECHA ENTREGADO *</label>
+          <input
+            type="date"
+            class="form-control"
+            name="fechaEntregado"
+            #fechaEntregado="ngModel"
+            [(ngModel)]="regPedidoService.selectedRegPedido.fechaEntregado"
+            placeholder="Fecha de Registro"
+            required
+          />
+        </div>
+      </div>
+      <form class="form-inline my-2 my-lg-0"></form>
+      <!-- Modal -->
+      <div
+        class="modal fade"
+        id="exampleModalScrollable"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="exampleModalScrollableTitle"
+        aria-hidden="true"
+      >
+        <div
+          class="modal-dialog modal-lg modal-dialog-scrollable"
+          role="document"
+        >
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalScrollableTitle">
+                Lista de Pedidos
+              </h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <!--insumo insertar -->
+
+              <div class="card mt-5">
+                <div class="card-body">
+                  <form
+                    #itemRegistroForm="ngForm"
+                    (ngSubmit)="onSubmitPedido(itemRegistroForm)"
+                  >
+                    <input
+                      type="hidden "
+                      style="display:none"
+                      name="$key"
+                      #$key="ngModel"
+                      [(ngModel)]="
+                        itemRegistroService.selectedItemRegistro.$key
+                      "
+                    />
+                    <div class="row">
+                      <div class="form-group col">
+                        <label for="">CODIGO</label>
+                        <div></div>
+                        <input
+                          id="idRegistro"
+                          type="text"
+                          class="form-control"
+                          name="idRegistro"
+                          #idRegistro="ngModel"
+                          [(ngModel)]="
+                            itemRegistroService.selectedItemRegistro.idRegistro
+                          "
+                          placeholder="Codigo de Registro"
+                          value="{{ ciClient }}"
+                          disabled="true"
+                        />
+                      </div>
+
+                      <div class="form-group col">
+                        <label for="">DESCRIPCION DE LA PRENDA</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="prenda"
+                          #prendaa="ngModel"
+                          [(ngModel)]="
+                            itemRegistroService.selectedItemRegistro.prenda
+                          "
+                          placeholder="Agregar Descripcion de la Penda"
+                        />
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="form-group col">
+                        <label for="">CANTIDAD</label>
+                        <input
+                          type="number"
+                          class="form-control"
+                          name="cantidad"
+                          #cantidad="ngModel"
+                          [(ngModel)]="
+                            itemRegistroService.selectedItemRegistro.cantidad
+                          "
+                          placeholder="Agregar Cantidad"
+                        />
+                      </div>
+
+                      <div class="form-group col">
+                        <label for="">COSTO UNITARIO</label>
+                        <input
+                          type="number"
+                          class="form-control"
+                          name="costoUnitario"
+                          #costoUnitario="ngModel"
+                          [(ngModel)]="
+                            itemRegistroService.selectedItemRegistro
+                              .costoUnitario
+                          "
+                          placeholder="Agredar Costo Unitario"
+                        />
+                      </div>
+                    </div>
+
+                    <div class="m-3">
+                      <img
+                        [src]="imgSrc"
+                        *ngIf="imgSrc"
+                        width="100"
+                        height="120"
+                      />
+                    </div>
+                    <div class="form-group col">
+                      <label for="">MODELO</label>
+                      <input
+                        type="file"
+                        class="form-control"
+                        name="modelo"
+                        #modelo="ngModel"
+                        [(ngModel)]="
+                          itemRegistroService.selectedItemRegistro.modelo
+                        "
+                        placeholder="Agregar Modelo de la Prenda"
+                        (change)="uploadFile1($event)"
+                      />
+                    </div>
+                    <div class="progress">
+                      <div
+                        class="progress-bar progress-bar-striped bg-success"
+                        role="progressbar"
+                        [style.width]="(uploadPercent | async) + '%'"
+                      ></div>
+                    </div>
+                    <input
+                      id="urlImageValue"
+                      type="text"
+                      name=""
+                      [value]="urlImage | async"
+                    />
+
+                    <div class="form-group col">
+                      <label for="">COLOR</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="color"
+                        #color="ngModel"
+                        [(ngModel)]="
+                          itemRegistroService.selectedItemRegistro.color
+                        "
+                        placeholder="Agregar Color de la Prenda"
+                      />
+                    </div>
+
+                    <div class="row"></div>
+
+                    <div class="modal-footer">
+                      <button class="btn btn-primary" type="submit">
+                        <i class="fas fa-plus-circle">Agregar </i>
+                      </button>
+                      <button
+                        class="btn btn-secondary "
+                        type="reset"
+                        (click)="resetForm(itemRegistroForm)"
+                      >
+                        <i class=" fas fa sync-alt"> Limpiar </i>
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+
+              <!---->
+            </div>
+            <!-- <div class="modal-footer">
+                        <button class ="btn btn-primary" type="submit">
+                            <i class="fas fa-plus-circle">Agregar </i>
+            
+                        </button>
+                        <button class="btn btn-secondary " type="reset" (click)="resetForm(itemRegistroForm)">
+                            <i class=" fas fa sync-alt"> Limpiar </i>
+            
+            
+                        </button>
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  
+                    </div> -->
+          </div>
+        </div>
+      </div>
+      <div *ngIf="ciClient">
+        <!--mostrar taabla-->
+        <!-- <div *ngIf="{{ciClient}}"> -->
+        <div clase="card">
+          <div class="card-body">
+            <h3 class="text-center">
+              DETALLE DEL PEDIDO
+            </h3>
+            <table class="table ">
+              <thead>
+                <tr>
+                  <th scope="col">ID REGISTRO</th>
+                  <th scope="col">TIPO DE PRENDA</th>
+                  <th scope="col">CANTIDAD</th>
+                  <th scope="col">COSTO UNITARIO</th>
+                  <th scope="col">COSTO TOTAL</th>
+                  <th scope="col">MODELO</th>
+                  <th scope="col">COLOR</th>
+                  <!-- <th scope="col">EVENTO</th> -->
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let itemRegistro of itemRegistroList">
+                  <td>{{ itemRegistro.idRegistro }}</td>
+                  <td>{{ itemRegistro.prenda }}</td>
+                  <td>{{ itemRegistro.cantidad }}</td>
+                  <td>{{ itemRegistro.costoUnitario }}</td>
+                  <td>{{ itemRegistro.costoTotal }}</td>
+                  <td>
+                    <img
+                      src="{{ itemRegistro.modelo }}"
+                      alt=""
+                      id=""
+                      width="70"
+                      height="70"
+                    />
+                  </td>
+                  <td>{{ itemRegistro.color }}</td>
+                  <!-- <a
+                    class="btn btn-secondary text-white"
+                    (click)="onEdit(itemRegistro)"
+                    data-toggle="modal"
+                    data-target="#exampleModalScrollable"
+                  >
+                    <i class="fas fa-edit"></i>
+                  </a>
+                  <a
+                    class="btn btn-danger text-white"
+                    (click)="onDelete(itemRegistro.$key)"
+                  >
+                    <i class="fas fa-trash-alt"></i>
+                  </a> -->
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="row">
+          <!-- <label for="">{{ hola }}</label> -->
+          <div class="col">
+            <label for="sucursal">COSTO TOTAL *</label>
+            <input
+              disabled="true;"
+              id="costoTotal"
+              type="text"
+              class="form-control"
+              name="costoTotal"
+              #costoTotal="ngModel"
+              [(ngModel)]="regPedidoService.selectedRegPedido.costoTotal"
+              value="{{ ct }}"
+              required
+            />
+          </div>
+          <div class="col">
+            <label for="sucursal">REGISTRAR ADELANTO</label>
+            <input
+              id="adelanto"
+              type="text"
+              class="form-control"
+              value="{{ adelanto }}"
+              disabled="true"
+            />
+            <!-- name="adelanto"
+              #adelanto="ngModel"
+              [(ngModel)]="regPedidoService.selectedRegPedido.adelanto"
+              placeholder="Registrar Adelanto"
+              (change)="valorAdelanto($event)" -->
+          </div>
+          <div class="col">
+            <label for="sucursal">SALDO *</label>
+            <input
+              id="saldo"
+              disabled="true"
+              type="text"
+              class="form-control"
+              name="saldo"
+              value="{{ saldoPagar }}"
+              required
+            />
+            <!-- #saldo="ngModel"
+              [(ngModel)]="regPedidoService.selectedRegPedido.saldo"
+              placeholder="Saldo" -->
+          </div>
+
+          <div class="form-group col">
+            <label>SALDO *</label>
+            <input
+              id="ingresarSaldo"
+              type="text"
+              class="form-control"
+              name="ingresarSaldo"
+              placeholder="Saldo"
+              required
+            />
+            <!-- <input
+              type="date"
+              class="form-control"
+              name="fechaRegistro"
+              #fechaRegistro="ngModel"
+              [(ngModel)]="regPedidoService.selectedRegPedido.fechaRegistro"
+              placeholder="Fecha de Registro"
+            /> -->
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button class="btn btn-primary" type="submit" [disabled]="!regPedidoForm.valid">
+            <i class="fas fa-plus-circle">Agregar </i>
+          </button>
+          <button
+            class="btn btn-secondary "
+            type="reset"
+            (click)="resetForm(regPedidoForm)"
+          >
+            <i class=" fas fa sync-alt"> Limpiar </i>
+          </button>
+          <!-- <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+            Imprimir Registro
+          </button> -->
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

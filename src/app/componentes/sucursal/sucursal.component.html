@@ -1,0 +1,229 @@
+<!-- Button trigger modal -->
+<button
+  *ngIf="nivel"
+  (click)="resetForm()"
+  type="button"
+  class="btn btn-primary"
+  data-toggle="modal"
+  data-target="#exampleModalScrollable"
+>
+  <i class="fas fa-plus-circle"></i>
+  Agregar Sucursal
+</button>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="exampleModalScrollable"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalScrollableTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalScrollableTitle">
+          Registro de Sucursal
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <label for="">Campos Obligatorios *</label>
+        <!--insumo insertar -->
+        <div class="card mt-5">
+          <div class="card-body">
+            <form #sucursalForm="ngForm" (ngSubmit)="onSubmit(sucursalForm)">
+              <input
+                type="hidden "
+                style="display:none"
+                name="$key"
+                #$key="ngModel"
+                [(ngModel)]="sucursalService.selectedSucursal.$key"
+              />
+
+              <div class="form-group">
+                <label for="">Descripcion *</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="descripcion"
+                  #descripcion="ngModel"
+                  [(ngModel)]="sucursalService.selectedSucursal.descripcion"
+                  placeholder="Descripcion"
+                  required
+                  minlength="3"
+                  maxlength="50"
+                />
+                <div class="row">
+                  <div *ngIf="descripcion.value != undefined" class="col">
+                    <p>Max: {{ descripcion.value.length }}/50</p>
+                  </div>
+
+                  <div
+                    class="text-danger col"
+                    *ngIf="descripcion.errors && (descripcion.dirty || descripcion.touched)"
+                  >
+                    <p [hidden]="!descripcion.errors.required">
+                      Campo requerido.
+                    </p>
+                    <p *ngIf="descripcion.errors?.minlength">
+                      Mínimo 3 caracteres
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="">Direccion *</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="direccion"
+                  #direccion="ngModel"
+                  [(ngModel)]="sucursalService.selectedSucursal.direccion"
+                  placeholder="Direccion"
+                  required
+                  maxlength="50"
+                  minlength="3"
+                />
+                <div class="row">
+                  <div *ngIf="direccion.value != undefined" class="col">
+                    <p>Max: {{ direccion.value.length }}/50</p>
+                  </div>
+
+                  <div
+                    class="text-danger col"
+                    *ngIf="
+                      direccion.errors && (direccion.dirty || direccion.touched)
+                    "
+                  >
+                    <p [hidden]="!direccion.errors.required">
+                      Campo requerido.
+                    </p>
+                    <p *ngIf="direccion.errors?.minlength">
+                      Mínimo 3 caracteres
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="">Telefono</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="telefono"
+                  #telefono="ngModel"
+                  [(ngModel)]="sucursalService.selectedSucursal.telefono"
+                  placeholder="Telefono"
+                  maxlength="10"
+                />
+                <div class="row">
+                  <div *ngIf="telefono.value != undefined" class="col">
+                    <p>Max: {{ telefono.value.length }}/10</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="">Encargado de Sucursal *</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="encargado"
+                  #encargado="ngModel"
+                  [(ngModel)]="sucursalService.selectedSucursal.encargado"
+                  placeholder="Encargado de Sucursal"
+                  required
+                  maxlength="50"
+                  minlength="3"
+                />
+                <div class="row">
+                  <div *ngIf="encargado.value != undefined" class="col">
+                    <p>Max: {{ encargado.value.length }}/50</p>
+                  </div>
+
+                  <div
+                    class="text-danger col"
+                    *ngIf="
+                      encargado.errors && (encargado.dirty || encargado.touched)
+                    "
+                  >
+                    <p [hidden]="!encargado.errors.required">
+                      Campo requerido.
+                    </p>
+                    <p *ngIf="encargado.errors?.minlength">
+                      Mínimo 3 caracteres
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="modal-footer">
+                <button class="btn btn-primary" type="submit" [disabled]="!sucursalForm.valid">
+                  <i class="fas fa-plus-circle">Agregar </i>
+                </button>
+                <button
+                  class="btn btn-secondary "
+                  type="reset"
+                  (click)="resetForm(sucursalForm)"
+                >
+                  <i class=" fas fa sync-alt"> Limpiar </i>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--mostrar taabla-->
+<div clase="card">
+  <div class="card-body">
+    <h2 class="text-center">LISTA DE SUCURSAL</h2>
+
+    <table class="table ">
+      <thead>
+        <tr>
+          <th scope="col">DESCRIPCION</th>
+          <th scope="col">DIRECCION</th>
+          <th scope="col">TELEFONO</th>
+          <th scope="col">ENCARGADO</th>
+          <th *ngIf="nivel" scope="col">EVENTO</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let sucursal of sucursalList">
+          <td>{{ sucursal.descripcion }}</td>
+          <td>{{ sucursal.direccion }}</td>
+          <td>{{ sucursal.telefono }}</td>
+          <td>{{ sucursal.encargado }}</td>
+          <a
+            *ngIf="nivel"
+            class="btn btn-secondary text-white"
+            (click)="onEdit(sucursal)"
+            data-toggle="modal"
+            data-target="#exampleModalScrollable"
+          >
+            <i class="fas fa-edit"></i>
+          </a>
+          <a
+            *ngIf="nivel"
+            class="btn btn-danger text-white"
+            (click)="onDelete(sucursal.$key)"
+          >
+            <i class="fas fa-trash-alt"></i>
+          </a>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

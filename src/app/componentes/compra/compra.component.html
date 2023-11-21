@@ -1,0 +1,410 @@
+<button
+  type="button"
+  class="btn btn-primary"
+  data-toggle="modal"
+  data-target="#exampleModalScrollable"
+>
+  <i class="fas fa-plus-circle"></i>
+  Agregar Compra
+</button>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="exampleModalScrollable"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalScrollableTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
+    <div class="modal-content ">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalScrollableTitle">
+          Registro de Compra
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <label for="">Campos Obligatorios *</label>
+        <!--personal insertar -->
+
+        <div class="card mt-5">
+          <div class="card-body">
+            <form #compraForm="ngForm" (ngSubmit)="onSubmit(compraForm)">
+              <div class="row">
+                <input
+                  type="hidden "
+                  style="display:none"
+                  name="$key"
+                  #$key="ngModel"
+                  [(ngModel)]="compraService.selectedCompra.$key"
+                />
+
+                <div class="col">
+                  <label>Agregar Articulo *</label>
+                  <select
+                    name="descripcion"
+                    class="custom-select"
+                    id="descripcion"
+                    #descripcion="ngModel"
+                    [(ngModel)]="compraService.selectedCompra.descripcion"
+                    required
+                  >
+                  <option [selected]="true" [ngValue]="undefined"
+                        >--Seleccione--</option
+                      >
+                    <option
+                      *ngFor="let insumo of detalle"
+                      [value]="insumo.detalle"
+                    >
+                      {{ insumo.detalle }}</option
+                    >
+                  </select>
+                  <div class="row">
+                    <div
+                      class="text-danger col"
+                      *ngIf="
+                        descripcion.errors &&
+                        (descripcion.dirty || descripcion.touched)
+                      "
+                    >
+                      <p [hidden]="!descripcion.errors.required">
+                        Campo requerido.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col">
+                  <label>Agregar Proveedor *</label>
+                  <select
+                    name="proveedor"
+                    class="custom-select"
+                    id="proveedor"
+                    #proveedor="ngModel"
+                    [(ngModel)]="compraService.selectedCompra.proveedor"
+                    required
+                  >
+                  <option [selected]="true" [ngValue]="undefined"
+                        >--Seleccione--</option
+                      >
+                    <option
+                      *ngFor="let proveedor of nombre"
+                      [value]="proveedor.nombre"
+                    >
+                      {{ proveedor.nombre }}</option
+                    >
+                  </select>
+                  <div class="row">
+                    <div
+                      class="text-danger col"
+                      *ngIf="
+                        proveedor.errors &&
+                        (proveedor.dirty || proveedor.touched)
+                      "
+                    >
+                      <p [hidden]="!proveedor.errors.required">
+                        Campo requerido.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col">
+                  <label>Autorizado por el Personal *</label>
+                  <select
+                    name="personal"
+                    class="custom-select"
+                    id="personal"
+                    #personal="ngModel"
+                    [(ngModel)]="compraService.selectedCompra.personal"
+                  >
+                  <option [selected]="true" [ngValue]="undefined"
+                        >--Seleccione--</option
+                      >
+                    <option
+                      *ngFor="let personal of nombrePersonal"
+                      [value]="personal.nombre"
+                    >
+                      {{ personal.nombre }}</option
+                    >
+                  </select>
+                  <div class="row">
+                    <div
+                      class="text-danger col"
+                      *ngIf="
+                        personal.errors && (personal.dirty || personal.touched)
+                      "
+                    >
+                      <p [hidden]="!personal.errors.required">
+                        Campo requerido.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row mt-3">
+                <div class="form-group col">
+                  <label for="">Cantidad *</label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    name="cantidad"
+                    #cantidad="ngModel"
+                    [(ngModel)]="compraService.selectedCompra.cantidad"
+                    placeholder="Agregar Cantidad"
+                    id="cantidad"
+                    required
+                    minlength="1"
+                    maxlength="5"
+                  />
+                  <div class="row">
+                    <div *ngIf="cantidad.value != undefined" class="col">
+                      <p>Max: {{ cantidad.value.length }}/50</p>
+                    </div>
+
+                    <div
+                      class="text-danger col"
+                      *ngIf="
+                        cantidad.errors && (cantidad.dirty || cantidad.touched)
+                      "
+                    >
+                      <p [hidden]="!cantidad.errors.required">
+                        Campo requerido.
+                      </p>
+                      <p *ngIf="cantidad.errors?.minlength">
+                        Mínimo 3 caracteres
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col">
+                  <label for="">Concentracion del Artículo *</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="consentracion"
+                    #consentracion="ngModel"
+                    [(ngModel)]="compraService.selectedCompra.consentracion"
+                    placeholder="Concentracion del Articulo"
+                    required
+                    maxlength="3"
+                    maxlength="50"
+                  />
+                  <div class="row">
+                    <div *ngIf="consentracion.value != undefined" class="col">
+                      <p>Max: {{ consentracion.value.length }}/50</p>
+                    </div>
+
+                    <div
+                      class="text-danger col"
+                      *ngIf="
+                        consentracion.errors &&
+                        (consentracion.dirty || consentracion.touched)
+                      "
+                    >
+                      <p [hidden]="!consentracion.errors.required">
+                        Campo requerido.
+                      </p>
+                      <p *ngIf="consentracion.errors?.minlength">
+                        Mínimo 3 caracteres
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col">
+                  <label for="">Precio Unitario *</label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    name="precioUnitario"
+                    #precioUnitario="ngModel"
+                    [(ngModel)]="compraService.selectedCompra.precioUnitario"
+                    placeholder="Precio Unitario"
+                    required
+                    maxlength="3"
+                    minlength="1"
+                  />
+                  <div class="row">
+                    <div *ngIf="precioUnitario.value != undefined" class="col">
+                      <p>Max: {{ precioUnitario.value.length }}/3</p>
+                    </div>
+
+                    <div
+                      class="text-danger col"
+                      *ngIf="
+                        precioUnitario.errors &&
+                        (precioUnitario.dirty || precioUnitario.touched)
+                      "
+                    >
+                      <p [hidden]="!precioUnitario.errors.required">
+                        Campo requerido.
+                      </p>
+                      <p *ngIf="precioUnitario.errors?.minlength">
+                        Mínimo 1 caracteres
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="form-group col">
+                  <label for="">Marca del Articulo</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="marca"
+                    #marca="ngModel"
+                    [(ngModel)]="compraService.selectedCompra.marca"
+                    placeholder="Marca del Articulo"
+                    maxlength="50"
+                  />
+                  <div class="row">
+                    <div *ngIf="marca.value != undefined" class="col">
+                      <p>Max: {{ marca.value.length }}/50</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group col">
+                  <label for="">Fecha de Compra *</label>
+                  <input
+                    type="date"
+                    class="form-control"
+                    name="fecha"
+                    #fecha="ngModel"
+                    [(ngModel)]="compraService.selectedCompra.fecha"
+                    placeholder="Agregar Fecha de Compra"
+                    required
+                  />
+                  <div class="row">
+                    <div
+                      class="text-danger col"
+                      *ngIf="fecha.errors && (fecha.dirty || fecha.touched)"
+                    >
+                      <p [hidden]="!fecha.errors.required">
+                        Campo requerido.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="modal-footer">
+                <button class="btn btn-primary" type="submit" [disabled]="!compraForm.valid">
+                  <i class="fas fa-plus-circle">Agregar </i>
+                </button>
+                <button
+                  type="reset"
+                  class="btn btn-secondary "
+                  (click)="resetForm(compraForm)"
+                >
+                  <i class=" fas fa sync-alt"> Limpiar </i>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!---->
+      </div>
+      <!-- <div class="modal-footer">
+            <button class ="btn btn-primary" type="submit">
+                <i class="fas fa-plus-circle">Agregar </i>
+
+            </button>
+            <button class="btn btn-secondary " type="reset" (click)="resetForm(CompraForm)">
+                <i class=" fas fa sync-alt"> Limpiar </i>
+
+
+            </button>
+          <button type="button" class="btn btn-secondary btn-danger " data-dismiss="modal">Close</button>
+      
+        </div> -->
+    </div>
+  </div>
+</div>
+
+<!--mostrar taabla-->
+
+<div clase="card">
+  <div class="card-body">
+    <h2 class="text-center">LISTA DE COMPRA</h2>
+    <table class="table ">
+      <thead>
+        <tr>
+          <th scope="col">DESCRIPCION</th>
+          <th scope="col">PROVEEDOR</th>
+          <th scope="col">PERSONAL</th>
+          <th scope="col">CANTIDAD</th>
+          <th scope="col">CONSENTRACION</th>
+          <th scope="col">COSTO UNITARIO</th>
+          <th scope="col">COSTO TOTAL</th>
+          <th scope="col">MARCA</th>
+          <th scope="col">FECHA DE COMPRA</th>
+          <th scope="col">ACCION</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let compra of compraList">
+          <td>{{ compra.descripcion }}</td>
+          <td>{{ compra.proveedor }}</td>
+          <td>{{ compra.personal }}</td>
+          <td>{{ compra.cantidad }}</td>
+          <td>{{ compra.consentracion }}</td>
+          <td>{{ compra.precioUnitario }}</td>
+          <td>{{ compra.precioTotal }}</td>
+          <td>{{ compra.marca }}</td>
+          <td>{{ compra.fecha }}</td>
+
+          <a
+            class="btn btn-secondary text-white"
+            (click)="onEdit(compra)"
+            data-toggle="modal"
+            data-target="#exampleModalScrollable"
+          >
+            <i class="fas fa-edit"></i>
+          </a>
+          <a class="btn btn-danger text-white" (click)="onDelete(compra.$key)">
+            <i class="fas fa-trash-alt"></i>
+          </a>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<!---->
+
+<!--
+<table class="table table-striped">
+        <tbody>
+      <tr>
+        <th scope="row">1</th>
+        <td>{{personal.nombre}}</td>
+        <td>{{personal.apellido}}</td>
+        <td>{{personal.ci}}</td>
+        <td>{{personal.expedicion}}</td>
+        <td>
+          <a class="btn btn-secondary text-white" (click)="onEdit(Personal)">
+            <i class="fas fa-edit"></i>
+          </a>
+          <a class="btn btn-danger text-white" (click)="onDelete(Personal.$key)">
+              <i class="fas fa-trash-alt"></i>
+            </a>
+        </td>
+      
+      </tr>
+      
+    </tbody>
+  </table>
+-->

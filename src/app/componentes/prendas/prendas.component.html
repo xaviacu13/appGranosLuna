@@ -1,0 +1,312 @@
+<!-- Button trigger modal -->
+<button
+  type="button"
+  class="btn btn-primary"
+  data-toggle="modal"
+  data-target="#exampleModalScrollable"
+>
+  <i class="fas fa-plus-circle"></i>
+  Agregar Prenda
+</button>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="exampleModalScrollable"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalScrollableTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalScrollableTitle">
+          Registro de Prenda
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!--insumo insertar -->
+        <label for="">Campos Obligatorios *</label>
+
+        <div class="card mt-5">
+          <div class="card-body">
+            <form #prendaForm="ngForm" (ngSubmit)="onSubmit(prendaForm)">
+              <input
+                type="hidden "
+                style="display:none"
+                name="$key"
+                #$key="ngModel"
+                [(ngModel)]="prendaService.selectedPrenda.$key"
+              />
+
+              <div class="row">
+                <div class="col-md-5">
+                  <div class="form-group">
+                    <label for="">Agregar Imagen *</label>
+                    <div *ngIf="imgSrc" class="image_wrapper row" id="img1">
+                      <img
+                        [src]="imgSrc"
+                        #image
+                        width="100"
+                        height="120"
+                        (click)="deletImg(image.src)"
+                    required
+                      />
+                      <button type="button" class="remove" (click)="deletImg()">
+                        <i class="fas fa-minus-circle"></i>
+                      </button>
+                    </div>
+                    <input
+                      type="file"
+                      placeholder="Agredar Imagen"
+                      (change)="uploadFile1($event)"
+                      #fileUploader
+                      required
+                    />
+                  </div>
+                  <div class="progress">
+                    <div
+                      class="progress-bar progress-bar-striped bg-success"
+                      role="progressbar"
+                      [style.width]="(uploadPercent | async) + '%'"
+                    ></div>
+                  </div>
+                  <input
+                    id="urlImageValue"
+                    type="hidden"
+                    name=""
+                    [value]="urlImage | async"
+                  />
+                </div>
+
+                <div class="form-group col">
+                  <label for="">Descripción *</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="descripcion"
+                    #descripcion="ngModel"
+                    [(ngModel)]="prendaService.selectedPrenda.descripcion"
+                    placeholder="Descripción"
+                    required
+                    maxlength="50"
+                    minlength="3"
+                  />
+                  <div class="row">
+                    <div *ngIf="descripcion.value != undefined" class="col">
+                      <p>Max: {{ descripcion.value.length }}/50</p>
+                    </div>
+
+                    <div
+                      class="text-danger col"
+                      *ngIf="
+                        descripcion.errors &&
+                        (descripcion.dirty || descripcion.touched)
+                      "
+                    >
+                      <p [hidden]="!descripcion.errors.required">
+                        Campo requerido.
+                      </p>
+                      <p *ngIf="descripcion.errors?.minlength">
+                        Mínimo 3 caracteres
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col">
+                  <label for="">Cantidad de Tela</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="cantTela"
+                    #cantTela="ngModel"
+                    [(ngModel)]="prendaService.selectedPrenda.cantTela"
+                    placeholder="Cantidad de tela"
+                    maxlength="10"
+                  />
+                  <div *ngIf="cantTela.value != undefined" class="col">
+                    <p>Max: {{ cantTela.value.length }}/10</p>
+                  </div>
+                </div>
+                <div class="form-group col-md-3">
+                  <label for="">Costo (Bs.) *</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="costConfeccion"
+                    #costConfeccion="ngModel"
+                    [(ngModel)]="prendaService.selectedPrenda.costConfeccion"
+                    placeholder="Agregar Costo de Confeccion"
+                    required
+                    minlength="1"
+                    maxlength="10"
+                  />
+                  <div class="row">
+                    <div *ngIf="costConfeccion.value != undefined" class="col">
+                      <p>Max: {{ costConfeccion.value.length }}/10</p>
+                    </div>
+
+                    <div
+                      class="text-danger col"
+                      *ngIf="
+                        costConfeccion.errors &&
+                        (costConfeccion.dirty || costConfeccion.touched)
+                      "
+                    >
+                      <p [hidden]="!costConfeccion.errors.required">
+                        Campo requerido.
+                      </p>
+                      <p *ngIf="costConfeccion.errors?.minlength">
+                        Mínimo 1 caracteres
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group col-md-3">
+                  <label for="">Tiempo (Días) *</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="tiempoAcabado"
+                    #tiempoAcabado="ngModel"
+                    [(ngModel)]="prendaService.selectedPrenda.tiempoAcabado"
+                    placeholder="Agregar Timpo de acabado"
+                    required
+                    minlength="1"
+                    maxlength="5"
+                  />
+                  <div class="row">
+                    <div *ngIf="tiempoAcabado.value != undefined" class="col">
+                      <p>Max: {{ tiempoAcabado.value.length }}/50</p>
+                    </div>
+
+                    <div
+                      class="text-danger col"
+                      *ngIf="
+                        tiempoAcabado.errors &&
+                        (tiempoAcabado.dirty || tiempoAcabado.touched)
+                      "
+                    >
+                      <p [hidden]="!tiempoAcabado.errors.required">
+                        Campo requerido.
+                      </p>
+                      <p *ngIf="tiempoAcabado.errors?.minlength">
+                        Mínimo 3 caracteres
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group col-md-3">
+                  <label for="">Costo Adicional (Bs.)</label>
+                  <input
+                    type="text"
+                    class="form-control row"
+                    name="costAd"
+                    #costAd="ngModel"
+                    [(ngModel)]="prendaService.selectedPrenda.costAd"
+                    placeholder="Costos Adicional"
+                    maxlength="5"
+                  />
+                  <div class="row">
+                    <div *ngIf="costAd.value != undefined" class="col">
+                      <p>Max: {{ costAd.value.length }}/5</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="modal-footer">
+                <button
+                  [disabled]="!prendaForm.valid"
+                  class="btn btn-primary"
+                  type="submit"
+                >
+                  <i class="fas fa-plus-circle">Agregar </i>
+                </button>
+                <button
+                  class="btn btn-secondary "
+                  type="reset"
+                  (click)="resetForm(prendaForm)"
+                >
+                  <i class=" fas fa sync-alt"> Limpiar </i>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!---->
+      </div>
+      <!-- <div class="modal-footer">
+            <button class ="btn btn-primary" type="submit">
+                <i class="fas fa-plus-circle">Agregar </i>
+
+            </button>
+            <button class="btn btn-secondary " type="reset" (click)="resetForm(insumoForm)">
+                <i class=" fas fa sync-alt"> Limpiar </i>
+
+
+            </button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      
+        </div> -->
+    </div>
+  </div>
+</div>
+
+<!--mostrar taabla-->
+
+<div clase="card">
+  <div class="card-body">
+    <h2 class="text-center">LISTA DE PRENDAS</h2>
+    <table class="table ">
+      <thead>
+        <tr>
+          <th scope="col">DESCRIPCION</th>
+          <th scope="col">CANTIDAD DE TELA</th>
+          <th scope="col">COSTO DE CONFECCION</th>
+          <th scope="col">TIEMPO ACABADO</th>
+          <th scope="col">COSTOS ADICIONALES</th>
+          <th scope="col">IMAGEN</th>
+          <th scope="col">Eventos</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let prenda of prendaList">
+          <td>{{ prenda.descripcion }}</td>
+          <td>{{ prenda.cantTela }}</td>
+          <td>{{ prenda.costConfeccion }}</td>
+          <td>{{ prenda.tiempoAcabado }}</td>
+          <td>{{ prenda.costAd }}</td>
+          <td>
+            <img src="{{ prenda.imagen }}" alt="" width="70" height="70" />
+          </td>
+          <a
+            class="btn btn-secondary text-white"
+            (click)="onEdit(prenda)"
+            data-toggle="modal"
+            data-target="#exampleModalScrollable"
+          >
+            <i class="fas fa-edit"></i>
+          </a>
+          <a class="btn btn-danger text-white" (click)="onDelete(prenda.$key)">
+            <i class="fas fa-trash-alt"></i>
+          </a>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

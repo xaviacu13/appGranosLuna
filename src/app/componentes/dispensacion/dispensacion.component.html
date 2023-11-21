@@ -1,0 +1,261 @@
+<!-- Button trigger modal -->
+<button
+  type="button"
+  class="btn btn-primary"
+  data-toggle="modal"
+  data-target="#exampleModalScrollable"
+>
+  <i class="fas fa-plus-circle"></i>
+  Agregar Dispensacion
+</button>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="exampleModalScrollable"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalScrollableTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalScrollableTitle">
+          Registro Dispensación
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!--dispensacion insertar -->
+
+        <div class="card mt-5">
+          <div class="card-body">
+            <form
+              #dispensacionForm="ngForm"
+              (ngSubmit)="onSubmit(dispensacionForm)"
+            >
+              <input
+                type="hidden "
+                style="display:none"
+                name="$key"
+                #$key="ngModel"
+                [(ngModel)]="dispensacionService.selectedDispensacion.$key"
+              />
+
+              <label>Articulos *</label>
+              <select
+                name="descripcion"
+                class="custom-select"
+                id="descripcion"
+                #descripcion="ngModel"
+                id="descripcion"
+                [(ngModel)]="
+                  dispensacionService.selectedDispensacion.descripcion
+                "
+                required
+              >
+                <option selected="true" value="">Seleccione un artículo</option>
+                <option *ngFor="let in of detalle"> {{ in.detalle }}</option>
+              </select>
+              <div class="row">
+                <div
+                  class="text-danger col"
+                  *ngIf="
+                    descripcion.errors &&
+                    (descripcion.dirty || descripcion.touched)
+                  "
+                >
+                  <p [hidden]="!descripcion.errors.required">
+                    Campo requerido.
+                  </p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <label>Dispensado al Personal *</label>
+                  <select
+                    name="personal"
+                    class="custom-select"
+                    id="personal"
+                    #personal="ngModel"
+                    [(ngModel)]="
+                      dispensacionService.selectedDispensacion.personal
+                    "
+                    required
+                  >
+                    <option selected="true" value=""
+                      >Seleccione un personal</option
+                    >
+                    <option *ngFor="let personal of nombrePersonal">
+                      {{ personal.nombre }}</option
+                    >
+                  </select>
+                  <div class="row">
+                    <div
+                      class="text-danger col"
+                      *ngIf="
+                        personal.errors && (personal.dirty || personal.touched)
+                      "
+                    >
+                      <p [hidden]="!personal.errors.required">
+                        Campo requerido.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="">Cantidad *</label>
+                  <input
+                    id="cantidad"
+                    type="number"
+                    class="form-control"
+                    name="cantidad"
+                    #cantidad="ngModel"
+                    [(ngModel)]="
+                      dispensacionService.selectedDispensacion.cantidad
+                    "
+                    placeholder="Cantidad"
+                    required
+                    maxlength="5"
+                    minlength="1"
+                  />
+                  <div class="row">
+                    <div *ngIf="cantidad.value != undefined" class="col">
+                      <p>Max: {{ cantidad.value.length }}/5</p>
+                    </div>
+
+                    <div
+                      class="text-danger col"
+                      *ngIf="
+                        cantidad.errors && (cantidad.dirty || cantidad.touched)
+                      "
+                    >
+                      <p [hidden]="!cantidad.errors.required">
+                        Campo requerido.
+                      </p>
+                      <p *ngIf="cantidad.errors?.minlength">
+                        Mínimo 3 caracteres
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="form-group col">
+                  <label for="">Fecha *</label>
+                  <input
+                    type="date"
+                    class="form-control"
+                    name="fecha"
+                    #fecha="ngModel"
+                    [(ngModel)]="dispensacionService.selectedDispensacion.fecha"
+                    placeholder="Agredar Fecha de Registro"
+                    required
+                  />
+                  <div class="row">
+                    <div
+                      class="text-danger col-md-3"
+                      *ngIf="fecha.errors && (fecha.dirty || fecha.touched)"
+                    >
+                      <p [hidden]="!fecha.errors.required">
+                        Campo requerido.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="">Descripcion</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="obs"
+                    #obs="ngModel"
+                    [(ngModel)]="dispensacionService.selectedDispensacion.obs"
+                    placeholder="Descripcion"
+                    maxlength="50"
+                  />
+                  <div class="row">
+                    <div *ngIf="obs.value != undefined" class="col">
+                      <p>Max: {{ obs.value.length }}/50</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="modal-footer">
+                <button
+                  class="btn btn-primary"
+                  type="submit"
+                  [disabled]="!dispensacionForm.valid"
+                >
+                  <i class="fas fa-plus-circle">Agregar </i>
+                </button>
+                <button
+                  class="btn btn-secondary "
+                  type="reset"
+                  (click)="resetForm(dispensacionForm)"
+                >
+                  <i class=" fas fa sync-alt"> Limpiar </i>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--mostrar taabla-->
+<div clase="card">
+  <div class="card-body">
+    <h3 class="text-center">
+      LISTA DE ALMACEN
+    </h3>
+    <table class="table ">
+      <thead>
+        <tr>
+          <th scope="col">DESCRIPCION DEL INSUMO</th>
+          <th scope="col">PERSONAL</th>
+          <th scope="col">CANTIDAD</th>
+          <th scope="col">FECHA</th>
+          <th scope="col">DESCRIPCION</th>
+          <th scope="col">EVENTO</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let dispensacion of dispensacionList">
+          <td>{{ dispensacion.descripcion }}</td>
+          <td>{{ dispensacion.personal }}</td>
+          <td>{{ dispensacion.cantidad }}</td>
+          <td>{{ dispensacion.fecha }}</td>
+          <td>{{ dispensacion.obs }}</td>
+
+          <a
+            class="btn btn-secondary text-white"
+            (click)="onEdit(dispensacion)"
+            data-toggle="modal"
+            data-target="#exampleModalScrollable"
+          >
+            <i class="fas fa-edit"></i>
+          </a>
+          <a
+            class="btn btn-danger text-white"
+            (click)="onDelete(dispensacion.$key)"
+          >
+            <i class="fas fa-trash-alt"></i>
+          </a>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
