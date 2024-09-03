@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../servicios/ser-auth/auth.service';
 import * as firebase from 'firebase/app';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -10,10 +11,13 @@ import { Router } from '@angular/router';
   styleUrls: ['./encabezado.component.css']
 })
 export class EncabezadoComponent implements OnInit {
+  public email: string;
+  public password: string;
 
   constructor(
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    public notificaciones: ToastrService
   ) {
     this.isRecepcionista = false;
     this.isClient = false;
@@ -25,6 +29,23 @@ export class EncabezadoComponent implements OnInit {
   isClient = false;
   isRecepcionista = false;
   emailUsuario: any;
+
+
+  onXavi() {
+
+    // this.authService.loginEmail(this.email, this.password)
+    this.authService.loginEmail('admin@gmail.com','administrador')
+    .then(res => {
+        var ref = firebase.database().ref("Usuario");
+       //  ref.orderByChild("correo").equalTo(this.email).on("child_added", snap => {
+        ref.orderByChild("correo").equalTo('admin@gmail.com').on("child_added", snap => {
+            
+         this.router.navigate(["/inicio"]);
+        });
+      }).catch(err => {
+        this.notificaciones.error("Error", "Usuario o contraseña incorrectas");
+      })
+  }
 
   ngOnInit() {
 
@@ -86,6 +107,8 @@ export class EncabezadoComponent implements OnInit {
     // }
   }
 
+
+  
   onCheckUser(): void {
     if (this.authService.getAuth() == null) {
       this.isLogin == false;
@@ -96,6 +119,14 @@ export class EncabezadoComponent implements OnInit {
 
   onClickLogout() {
     this.authService.logOut();
+  }
+
+  onXavii() {
+    console.log('xaviiiiii.....');
+  }
+
+  irRegistro() {
+    this.router.navigate(["/regUsers"]);
   }
 
 }

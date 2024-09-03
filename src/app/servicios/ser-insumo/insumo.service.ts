@@ -24,6 +24,7 @@ export class InsumoService {
       color: insumo.color,
       imagen: insumo.imagen,
       obs: insumo.obs || null,
+      precio: insumo.precio || null
     })
   }
 
@@ -34,6 +35,7 @@ export class InsumoService {
       color: insumo.color,
       imagen: insumo.imagen,
       obs: insumo.obs || null,
+      precio: insumo.precio || null
     });
   }
 

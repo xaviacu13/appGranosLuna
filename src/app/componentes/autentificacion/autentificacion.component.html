@@ -1,31 +1,416 @@
 <form #formLogin="ngForm" (submit)="onLogin()">
   <div class="text-center">
-    <img src="assets/images/portada/granosluna_portada4.jpeg" width="1220" height="470" />
-    <!-- <div id="carouselExample" class="carousel slide">
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <img src="assets/images/portada/granosLuna_portada2.jpeg" class="d-block w-100" alt="...">
-        </div>
-        <div class="carousel-item">
-          <img src="assets/images/portada/granosluna_portada4.jpeg" class="d-block w-100" alt="...">
-        </div>
-        <div class="carousel-item">
-          <img src="..." class="d-block w-100" alt="...">
+    <!-- <img src="assets/images/portada/granosluna_portada4.jpeg" width="1220" height="470" /> -->
+  </div>
+  <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+      <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+      <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+      <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+      <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+    </ol>
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img class="d-block w-100" src="assets/images/portada/p1.jpg" alt="First slide" height="550">
+        <div class="carousel-caption d-none d-md-block">
+          <h3>Licoreria Muyupampa le ofrece todo tipo de bebidas</h3>
+          <p>Pedidos al whatsapp 73426677</p>
         </div>
       </div>
-      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
-    </div> -->
+      <div class="carousel-item">
+        <img class="d-block w-100" src="assets/images/portada/p2.webp" alt="Second slide" height="550">
+        <div class="carousel-caption d-none d-md-block">
+          <h3>Licoreria Muyupampa le ofrece todo tipo de bebidas</h3>
+          <p>Pedidos al whatsapp 73426677</p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img class="d-block w-100" src="assets/images/portada/p3.webp" alt="Third slide" height="550">
+        <div class="carousel-caption d-none d-md-block">
+          <h3>Licoreria Muyupampa le ofrece todo tipo de bebidas</h3>
+          <p>Pedidos al whatsapp 73426677</p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img class="d-block w-100" src="assets/images/portada/p4.jpg" alt="portada lico Muyupampa" height="550">
+
+      </div>
+      <div class="carousel-item">
+        <img class="d-block w-100" src="assets/images/portada/p6.jpg" alt="portada lico Muyupampa" height="550">
+        <div class="carousel-caption d-none d-md-block">
+          <h3>Licoreria Muyupampa le ofrece todo tipo de bebidas</h3>
+          <p>Pedidos al whatsapp 73426677</p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img class="d-block w-100" src="assets/images/portada/p7.webp" alt="portada lico Muyupampa" height="550">
+        <div class="carousel-caption d-none d-md-block">
+          <h3>Licoreria Muyupampa le ofrece todo tipo de bebidas</h3>
+          <p>Pedidos al whatsapp 73426677</p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img class="d-block w-100" src="assets/images/portada/p8.avif" alt="portada lico Muyupampa" height="550">
+        <div class="carousel-caption d-none d-md-block">
+          <h3>Licoreria Muyupampa le ofrece todo tipo de bebidas</h3>
+          <p>Pedidos al whatsapp 73426677</p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img class="d-block w-100" src="assets/images/portada/p9.png" alt="portada lico Muyupampa" height="550">
+        <div class="carousel-caption d-none d-md-block">
+          <h3>Licoreria Muyupampa le ofrece todo tipo de bebidas</h3>
+          <p>Pedidos al whatsapp 73426677</p>
+        </div>
+      </div>
+    </div>
+    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Anterior</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Siguiente</span>
+    </a>
   </div>
 
-  <div class="container">
+  <div class="mainContent">
+    <div>
+      <div class="titleContent">
+        <h3 id="cervezas" class="contacts-text"> CERVEZAS </h3>
+        <img src="assets/images/logo/gl2.jpeg" alt="logo" height="60px" width="60px">
+      </div>
+      <div class="row row-cols-1 row-cols-md-3 g-4 container-all cardContent">
+        <div class="col">
+          <div class="card">
+            <img src="assets/images/productos/budveiser.webp" class="card-img-top" alt="budveiser" height="380">
+            <div class="cardDes">
+              <div class="priceContent">
+                <h5 class="card-title">Budveiser</h5>
+                <p class="card-text">cerveza lata 710 ml</p>
+              </div>
+              <div class="priceContent">
+                <button href="#" class="btn btn-secondary" disabled> Bs. 12</button>
+                <a href="https://wa.me/59174439889?text=Hola, quiero Budveiser cerveza lata 710 ml por favor?" class="btn btn-primary">Pedir</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <img src="assets/images/productos/corona.jpg" class="card-img-top" alt="Adida Shoes" height="380">
+            <div class="cardDes">
+              <div class="priceContent">
+                <h5 class="card-title">Corona</h5>
+                <p class="card-text">Cerveza 600 ml</p>
+              </div>
+              <div class="priceContent">
+                <button href="#" class="btn btn-secondary" disabled> Bs. 15.00</button>
+                <a href="https://wa.me/59174439889?text=Hola, quiero Corona Cerveza de 600 ml por favor?" class="btn btn-primary">Pedir</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <img src="assets/images/productos/huari.jpeg" class="card-img-top" alt="midi" height="380">
+            <div class="cardDes">
+              <div class="priceContent">
+                <h5 class="card-title">HUARI</h5>
+                <p class="card-text">cerveza 657 ml</p>
+              </div>
+              <div class="priceContent">
+                <button href="#" class="btn btn-secondary" disabled> Bs. 15.00</button>
+                <a href="https://wa.me/59174439889?text=Hola, quiero Huari cerveza de 675 ml por favor?" class="btn btn-primary">Pedir</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <img src="assets/images/productos/quilmes.jpg" class="card-img-top" alt="midi" height="380">
+            <div class="cardDes">
+              <div class="priceContent">
+                <h5 class="card-title">Quilmes</h5>
+                <p class="card-text">Cerveza en botella 1 Lt.</p>
+              </div>
+              <div class="priceContent">
+                <button href="#" class="btn btn-secondary" disabled> Bs. 15.00</button>
+                <a href="https://wa.me/59174439889?text=Hola, Quilmes cerveza en botella de 1 Tt. por favor?" class="btn btn-primary">Pedir</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <img src="assets/images/productos/surena.jpeg" class="card-img-top" alt="midi" height="380">
+            <div class="cardDes">
+              <div class="priceContent">
+                <h5 class="card-title">Surena</h5>
+                <p class="card-text">cerveza en botella 1 Lt.</p>
+              </div>
+              <div class="priceContent">
+                <button href="https://wa.me/59174439889?text=Hola, quiero Surena cerveza en botella de 1 Lt. por favor?" class="btn btn-secondary" disabled> Bs. 8.00</button>
+                <a href="#" class="btn btn-primary">Pedir</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <img src="assets/images/productos/pacena.jpeg" class="card-img-top" alt="midi" height="380">
+            <div class="cardDes">
+              <div class="priceContent">
+                <h5 class="card-title">Pacena</h5>
+                <p class="card-text">En lata de 650 ml</p>
+              </div>
+              <div class="priceContent">
+                <button href="#" class="btn btn-secondary" disabled> Bs. 10.00</button>
+                <a href="https://wa.me/59174439889?text=Hola, quiero Pacena lata de 650 ml por favor?" class="btn btn-primary">Pedir</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="titleContent">
+        <h3 id="whisky" class="contacts-text"> WHISKY </h3>
+        <img src="assets/images/logo/gl2.jpeg" alt="logo" height="60px" width="60px">
+      </div>
+      <div class="row row-cols-1 row-cols-md-3 g-4 container-all ">
+        <div class="col">
+          <div class="card">
+            <img src="assets/images/productos/sandi.jpg" class="card-img-top" alt="budveiser" height="380">
+            <div class="cardDes">
+              <div class="priceContent">
+                <h5 class="card-title">Sandy Mac</h5>
+                <p class="card-text">Whisky de 1 Lt</p>
+              </div>
+              <div class="priceContent">
+                <button href="#" class="btn btn-secondary" disabled> Bs. 120.00</button>
+                <a href="https://wa.me/59174439889?text=Hola, quiero  Sandy mac Whisky de 1 Lt por favor?" class="btn btn-primary">Pedir</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <img src="assets/images/productos/jhonnie.webp" class="card-img-top" alt="Adida Shoes" height="380">
+            <div class="cardDes">
+              <div class="priceContent">
+                <h5 class="card-title">Jhonnie Wolker</h5>
+                <p class="card-text">Whisky de 1 Lt</p>
+              </div>
+              <div class="priceContent">
+                <button href="#" class="btn btn-secondary" disabled> Bs. 130.00</button>
+                <a href="https://wa.me/59174439889?text=Hola, quiero Johnnie Wolker Whisky de 1 Lt por favor?" class="btn btn-primary">Pedir</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <img src="assets/images/productos/doble.webp" class="card-img-top" alt="midi" height="380">
+            <div class="cardDes">
+              <div class="priceContent">
+                <h5 class="card-title">Doble V</h5>
+                <p class="card-text"> Whisky de 1 Lt</p>
+              </div>
+              <div class="priceContent">
+                <button href="#" class="btn btn-secondary" disabled> Bs. 70.00</button>
+                <a href="https://wa.me/59174439889?text=Hola, quiero Doble V Whisky de 1 Lt por favor?" class="btn btn-primary">Pedir</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="titleContent">
+        <h3 id="roones" class="contacts-text"> RON </h3>
+        <img src="assets/images/logo/gl2.jpeg" alt="logo" height="60px" width="60px">
+      </div>
+      <div class="row row-cols-1 row-cols-md-3 g-4 container-all ">
+        <div class="col">
+          <div class="card">
+            <img src="assets/images/productos/abuelo.jpeg" class="card-img-top" alt="budveiser" height="380">
+            <div class="cardDes">
+              <div class="priceContent">
+                <h5 class="card-title">Ron Abuelo</h5>
+                <p class="card-text">Ronn 1 Lt.</p>
+              </div>
+              <div class="priceContent">
+                <button href="#" class="btn btn-secondary" disabled> Bs. 200.00</button>
+                <a href="https://wa.me/59174439889?text=Hola, quiero Ron abuelo roon de 1 Lt por favor?" class="btn btn-primary">Pedir</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <img src="assets/images/productos/habana.jpg" class="card-img-top" alt="Corona" height="380">
+            <div class="cardDes">
+              <div class="priceContent">
+                <h5 class="card-title">Abahana</h5>
+                <p class="card-text"> Ron negro de 1 Lt.</p>
+              </div>
+              <div class="priceContent">
+                <button href="#" class="btn btn-secondary" disabled> Bs. 470.00</button>
+                <a href="https://wa.me/59174439889?text=Hola, quiero Abahana Ron negro de 1 Lt por favor?" class="btn btn-primary">Pedir</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <img src="assets/images/productos/bacardi.jpg" class="card-img-top" alt="midi" height="380">
+            <div class="cardDes">
+              <div class="priceContent">
+                <h5 class="card-title">Bacardi</h5>
+                <p class="card-text">Roon Blanco de 1 Lt.</p>
+              </div>
+              <div class="priceContent">
+                <button href="#" class="btn btn-secondary" disabled> Bs. 100.00</button>
+                <a href="https://wa.me/59174439889?text=Hola, quiero Bacardi por favor?" class="btn btn-primary">Pedir</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="titleContent">
+        <h3 id="vinos" class="contacts-text"> VINO </h3>
+        <img src="assets/images/logo/gl2.jpeg" alt="logo" height="60px" width="60px">
+      </div>
+      <div class="row row-cols-1 row-cols-md-3 g-4 container-all ">
+        <div class="col">
+          <div class="card">
+            <img src="assets/images/productos/vita.jpeg" class="card-img-top" alt="budveiser" height="380">
+            <div class="cardDes">
+              <div class="priceContent">
+                <h5 class="card-title">Casa Vieja</h5>
+                <p class="card-text">vino en botella 600 ml</p>
+              </div>
+              <div class="priceContent">
+                <button href="#" class="btn btn-secondary" disabled> Bs. 20.00</button>
+                <a href="https://wa.me/59174439889?text=Hola, quiero Casa vieja vino en bottela de 600 ml por favor?" class="btn btn-primary">Pedir</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <img src="assets/images/productos/terruno.webp" class="card-img-top" alt="Adida Shoes" height="380">
+            <div class="cardDes">
+              <div class="priceContent">
+                <h5 class="card-title">Terrunio</h5>
+                <p class="card-text">Vino en bottela 600 ml</p>
+              </div>
+              <div class="priceContent">
+                <button href="#" class="btn btn-secondary" disabled> Bs. 16.00</button>
+                <a href="https://wa.me/59174439889?text=Hola, quiero Terrunio vino en botella de 600 ml por favor?" class="btn btn-primary">Pedir</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <img src="assets/images/productos/uvita.jpeg" class="card-img-top" alt="uvita" height="380">
+            <div class="cardDes">
+              <div class="priceContent">
+                <h5 class="card-title">Uvita</h5>
+                <p class="card-text">Vino en carton 1 Lt.</p>
+              </div>
+              <div class="priceContent">
+                <button href="#" class="btn btn-secondary" disabled> Bs. 10.00</button>
+                <a href="https://wa.me/59174439889?text=Hola, quiero Uvita vino en carton de 1 Lt por favor?" class="btn btn-primary">Pedir</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="titleContent">
+        <h3 id="otros" class="contacts-text"> OTROS </h3>
+        <img src="assets/images/logo/gl2.jpeg" alt="logo" height="60px" width="60px">
+      </div>
+      <div class="row row-cols-1 row-cols-md-3 g-4 container-all ">
+        <div class="col">
+          <div class="card">
+            <img src="assets/images/productos/chicha.jpg" class="card-img-top" alt="budveiser" height="380">
+            <div class="cardDes">
+              <div class="priceContent">
+                <h5 class="card-title">Chicha</h5>
+                <p class="card-text">Jarra de 1 Lt.</p>
+              </div>
+              <div class="priceContent">
+                <button href="#" class="btn btn-secondary" disabled> Bs. 20.00</button>
+                <a href="https://wa.me/59174439889?text=Hola, quiero Chicha jarra de 1 Lt por favor?" class="btn btn-primary">Pedir</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <img src="assets/images/productos/caiman.jpeg" class="card-img-top" alt="Adida Shoes" height="380">
+            <div class="cardDes">
+              <div class="priceContent">
+                <h5 class="card-title">Caiman</h5>
+                <p class="card-text">Alcohol 70% 1 Lt.</p>
+              </div>
+              <div class="priceContent">
+                <button href="#" class="btn btn-secondary" disabled> Bs. 20.00</button>
+                <a href="https://wa.me/59174439889?text=Hola, quiero Caiman alcohol 70% de 1 Lt por favor?" class="btn btn-primary">Pedir</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <img src="assets/images/productos/cuervo.png" class="card-img-top" alt="midi" height="380">
+            <div class="cardDes">
+              <div class="priceContent">
+                <h5 class="card-title">Jose Cuervo</h5>
+                <p class="card-text">Tequila de 1 Lt.</p>
+              </div>
+              <div class="priceContent">
+                <button href="#" class="btn btn-secondary" disabled> Bs. 90.00</button>
+                <a href="https://wa.me/59174439889?text=Hola, quiero Jose Cuervo Tequila de 1 Lt por favor?" class="btn btn-primary">Pedir</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="footer">
+      <div class="row">
+        <a class="col-lg-3 col-sm-6 col-xs-12"
+          href="https://wa.me/59174439889?text=Hola Licoreria Muyupampa, quiero hacer un pedido de:"><i
+            class='bx bxl-whatsapp bx-md colorWhatsapp'></i>74439889</a>
+        <a class="col-lg-3 col-sm-6 col-xs-12" href="https://www.instagram.com/"><i
+            class='bx bxl-instagram bx-md colorInsta'></i>Lico Muyupampa</a>
+        <a class="col-lg-3 col-sm-6 col-xs-12" href="https://twitter.com/"><i class='bx bxl-twitter bx-md colorTwitter'></i>Licores Muyu</a>
+        <a class="col-lg-3 col-sm-6 col-xs-12" href="https://www.facebook.com/diogo.mamanacondori?locale=es_LA">
+          <i class='bx bxl-facebook bx-md colorFace'></i>Home Brew
+        </a>
+      </div>
+    </div><br>
+  </div>
+
+  <!-- <div class="container">
     <div class="row mt-3">
+      <div class=" ml-4 col-0">
+        <img src="assets/images/logo/gl2.jpeg" alt="logo" height="81" class="rounded-circle" />
+      </div>
       <div class="col">
         <label for="uname"><b>Introducir Correo</b></label>
         <input
@@ -36,9 +421,9 @@
           class="form-control"
           required
         />
-      </div>
+      </div> -->
 
-      <div class="col">
+  <!-- <div class="col">
         <label for="psw"><b>Contraseña</b></label>
         <input
           [(ngModel)]="password"
@@ -56,13 +441,13 @@
     </div>
     <div class="mt-3 row">
       <button type="button" class="btn btn-primary btn-lg btn-block" (click)="irRegistro()">Registrarse</button>
-    </div>
+    </div> -->
 
-    <!-- <label>
+  <!-- <label>
       <input type="checkbox" checked="checked" name="remember" /> Recordar
       Contraña
     </label> -->
-  </div>
+  <!-- </div> -->
 
   <!-- <div class="container" style="background-color:#f1f1f1"> -->
   <!-- <button type="button" class="cancelbtn">Cancelar</button> -->

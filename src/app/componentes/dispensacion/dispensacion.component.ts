@@ -8,6 +8,8 @@ import { AngularFireDatabase } from 'angularfire2/database'
 import { InsumoService } from "../../servicios/ser-insumo/insumo.service"
 import { Insumo } from "../../models/insumo";
 import { Personal } from 'src/app/models/personal';
+import { Caja } from '../../models/caja';
+import { CajaService } from '../../servicios/ser-caja/caja.service';
 import * as firebase from 'firebase/app';
 import { CompraService } from '../../servicios/ser-compra/compra.service';
 import { AuthService } from '../../servicios/ser-auth/auth.service';
@@ -23,13 +25,15 @@ export class DispensacionComponent implements OnInit {
   detalle: any;
   nombrePersonal: any;
   dispensacionList: Dispensacion[];
+  cajaList: Caja;
   constructor(
     private dispensacionService: DispensacionService,
     private toastr: ToastrService,
     public db: AngularFireDatabase,
     public compraService: CompraService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private cajaService: CajaService,
   ) {
 
     db.list('Insumo').snapshotChanges().subscribe(item => {
@@ -64,6 +68,10 @@ export class DispensacionComponent implements OnInit {
       var ref = firebase.database().ref('almacen');
       var des = (document.getElementById('descripcion') as HTMLInputElement).value;
       var cantidad = (document.getElementById('cantidad') as HTMLInputElement).value;
+      let fecha = dispensacionForm.value.fecha;
+      let glosa = 'Ingreso por venta de ' + dispensacionForm.value.descripcion;
+      let personal = dispensacionForm.value.personal
+      let entradaCaja = parseInt(dispensacionForm.value.precioUnitario) * parseInt(dispensacionForm.value.cantidad);
       var descripcion;
       var data;
       var key;
@@ -90,13 +98,17 @@ export class DispensacionComponent implements OnInit {
           // this.almacenService.updateAlmacen(null,this.almacenList.descripcion, this.almacenList.entrada, this.almacenList.salida, this.almacenList.estado, this.almacenList.total, Object.keys(snapshot.val())[0]);
           // setTimeout(() => {this.almacenService.updateAlmacen(null, descripcion, entrada, salida, estado, total, key)},3000);
           data = { descripcion, entrada, salida, estado, total };
-        })
+        })        
       })
-      firebase.database().ref().child('almacen/' + key).update(data);
-      this.toastr.success('Operacion Correcta', 'Dispensacion registrada correctamente');
+      this.cajaService.insertCaja(null, fecha, glosa, entradaCaja, '', personal);
+
+      // firebase.database().ref().child('almacen/' + key).update(data)  
+      setTimeout(() => { firebase.database().ref().child('almacen/' + key).update(data);}, 1000);
+      this.toastr.success('Operacion Correcta', 'Venta registrada correctamente');
     }
     else {
       this.dispensacionService.updateDispensacion(dispensacionForm.value);
+
       this.toastr.success('Operacion Correcta', 'Compra modificado correctamente')
     }
     $('#exampleModalScrollable').modal('hide');
