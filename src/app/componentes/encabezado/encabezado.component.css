@@ -1,0 +1,22 @@
+.heder{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #43e8bf;
+  background-image: linear-gradient(315deg, #e20303 0%, #000000 74%);
+  width: 100%; 
+  padding-right: 15px;
+}
+.color {color: rgb(194, 130, 130)}
+.color2 {color: 
+  rgb(247, 227, 227);
+  text-shadow: 2;
+}
+.categorias {
+  display: flex;
+  align-items: center;
+}
+.logo {
+  display: flex;
+  justify-content: center;
+}

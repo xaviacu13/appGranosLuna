@@ -1,0 +1,60 @@
+.nav-color{
+  background-color: #43e8bf;
+  background-image: linear-gradient(315deg, #43e8bf 0%, #000000 74%);
+  margin-top: -8px;
+  margin-bottom: -30px;
+  width: 100%; 
+}
+.color {color: rgb(236, 170, 170)}
+.colorWhatsapp {color: rgb(6, 163, 74)}
+.colorFace {color: rgb(46, 46, 213)}
+.colorInsta {color: rgb(240, 82, 198)}
+.colorTwitter {color: aliceblue;}
+.mainContent{ 
+  padding-top: 20px;
+  background-color: black;
+  margin-bottom: -20px;
+}
+.container-all{margin: 20px;}
+.footer{
+  padding: 10px;
+  background-color: #43e8bf;
+  background-image: linear-gradient(315deg, #e20303 0%, #000000 74%);
+}
+.contactos,i{ color: #000000;}
+.icons i:hover{
+  background-color: #000000;
+  color: #43e8bf ;
+  border-radius: 4px;
+  transition: all 0.8s;
+}
+.card a{
+  background-color: #43e8bf;
+  border: #43e8bf solid;
+  justify-content: center;
+}
+.contacts-text{color: white;}
+
+.text{color: #000000;}
+
+.nav2{justify-content: end;}
+.priceContent {
+  display: flex;
+  justify-content: space-between;
+}
+.cardDes{
+  background-color: rgb(157, 152, 152);
+  padding: 0.5rem;
+}
+.cardContent{
+  row-gap: 1rem;
+  align-content: space-between;
+  padding-top: 1rem;
+}
+.titleContent{
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  margin-left: 3rem;
+  margin-right: 3rem;
+}

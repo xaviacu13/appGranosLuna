@@ -6,4 +6,5 @@ export class Insumo {
     color:string;
     imagen:string;
     obs:string;
+    precio: number;
 }

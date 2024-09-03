@@ -115,7 +115,7 @@
               </div>
               <div class="row">
                 <div class="form-group col">
-                  <label for="">Detalle *</label>
+                  <label for="">Nombre *</label>
                   <input
                     id="destalleInput"
                     type="text"
@@ -123,7 +123,7 @@
                     name="detalle"
                     #detalle="ngModel"
                     [(ngModel)]="insumoService.selectedInsumo.detalle"
-                    placeholder="Detalle"
+                    placeholder="Introducir Nombre"
                     required
                     maxlength="50"
                     minlength="3"
@@ -149,14 +149,14 @@
                   </div>
                 </div>
                 <div class="form-group col-md-5">
-                  <label for="">Unidad *</label>
+                  <label for="">Contenido *</label>
                   <input
                     type="text"
                     class="form-control"
                     name="unidadMedida"
                     #unidadMedida="ngModel"
                     [(ngModel)]="insumoService.selectedInsumo.unidadMedida"
-                    placeholder="Unidad de Medida"
+                    placeholder="Contenido"
                     required
                     maxlength="50"
                     minlength="3"
@@ -183,7 +183,57 @@
                   </div>
                 </div>
               </div>
+              <label for="">Descripcion</label>
               <div class="form-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  name="obs"
+                  #obs="ngModel"
+                  [(ngModel)]="insumoService.selectedInsumo.obs"
+                  placeholder="Descripcion corta"
+                  maxlength="50"
+                />
+                <div class="row">
+                  <div *ngIf="obs.value != undefined" class="col">
+                    <p>Max: {{ obs.value.length }}/50</p>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div class="row">
+                  <div class="form-group col">
+                    <label for="exampleFormControlSelect1">Tipo de Bebida *</label>
+                    <select
+                      class="form-control"
+                      id="exampleFormControlSelect1"
+                      name="color"
+                      #expedicion="ngModel"
+                      [(ngModel)]="insumoService.selectedInsumo.color"
+                    >
+                      <option value="CERVESA">CERVEZA</option>
+                      <option value="VINO">VINO</option>
+                      <option value="ROON">ROON</option>
+                      <option value="WHISKY">WHISKY</option>
+                      <option value="gaseosas">GASEOSAS</option>
+                      <option value="OTROS">OTROS</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-5">
+                    <label for="">Precio (Bs) *</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="precio"
+                      #precio="ngModel"
+                      [(ngModel)]="insumoService.selectedInsumo.precio"
+                      placeholder="Precio"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+              <!-- <div class="form-group">
                 <label for="">Tipo de Producto *</label>
                 <input
                   type="text"
@@ -213,25 +263,7 @@
                     </p>
                   </div>
                 </div>
-              </div>
-
-              <label for="">Observacion</label>
-              <div class="form-group">
-                <input
-                  type="text"
-                  class="form-control"
-                  name="obs"
-                  #obs="ngModel"
-                  [(ngModel)]="insumoService.selectedInsumo.obs"
-                  placeholder="Observacion"
-                  maxlength="50"
-                />
-                <div class="row">
-                  <div *ngIf="obs.value != undefined" class="col">
-                    <p>Max: {{ obs.value.length }}/50</p>
-                  </div>
-                </div>
-              </div>
+              </div> -->
 
               <div class="modal-footer">
                 <button
@@ -264,23 +296,25 @@
     <table class="table ">
       <thead>
         <tr>
-          <th scope="col">DETALLE</th>
-          <th scope="col">UNIDAD DE MEDIDA</th>
-          <th scope="col">COLOR</th>
+          <th scope="col">NOMBRE</th>
+          <th scope="col">DESCRIPCION</th>
+          <th scope="col">CONTENIDO</th>
+          <th scope="col">TIPO DE BEBIDA</th>
+          <th scope="col">PRECIO (Bs)</th>
           <th scope="col">IMAGEN</th>
-          <th scope="col">OBSERVACION</th>
           <th scope="col">ACCION</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let insumo of insumoList | insumoFilter: filterPost">
           <td>{{ insumo.detalle }}</td>
+          <td>{{ insumo.obs }}</td>
           <td>{{ insumo.unidadMedida }}</td>
           <td>{{ insumo.color }}</td>
+          <td>{{ insumo.precio }} Bs.</td>
           <td>
             <img src="{{ insumo.imagen }}" alt="" width="70" height="70" />
           </td>
-          <td>{{ insumo.obs }}</td>
           <a
             class="btn btn-secondary text-white"
             (click)="onEdit(insumo)"

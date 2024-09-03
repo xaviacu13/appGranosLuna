@@ -8,7 +8,7 @@ table{
 }
 
 th{
-    background-color: rgb(39, 175, 185);
+    background-color: rgb(157, 36, 36);
     color: white;
     margin: 0 15px 0;
 }
@@ -18,9 +18,9 @@ table{
 }
 
 tr:hover{
-    background-color: #adf1f6; 
+    background-color: #dfa29e; 
 }
 
 h2{
-    color: #096066
+    color: #7c2009
 }

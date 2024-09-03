@@ -1,35 +1,19 @@
 <!-- Button trigger modal -->
-<button
-  type="button"
-  class="btn btn-primary"
-  data-toggle="modal"
-  data-target="#exampleModalScrollable"
->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalScrollable">
   <i class="fas fa-plus-circle"></i>
   Generar nueva venta
 </button>
 
 <!-- Modal -->
-<div
-  class="modal fade"
-  id="exampleModalScrollable"
-  tabindex="-1"
-  role="dialog"
-  aria-labelledby="exampleModalScrollableTitle"
-  aria-hidden="true"
->
+<div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-scrollable" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalScrollableTitle">
-          Registro Dispensación
+          Registro de ventas
         </h5>
-        <button
-          type="button"
-          class="close"
-          data-dismiss="modal"
-          aria-label="Close"
-        >
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -38,106 +22,56 @@
 
         <div class="card mt-5">
           <div class="card-body">
-            <form
-              #dispensacionForm="ngForm"
-              (ngSubmit)="onSubmit(dispensacionForm)"
-            >
-              <input
-                type="hidden "
-                style="display:none"
-                name="$key"
-                #$key="ngModel"
-                [(ngModel)]="dispensacionService.selectedDispensacion.$key"
-              />
+            <form #dispensacionForm="ngForm" (ngSubmit)="onSubmit(dispensacionForm)">
+              <input type="hidden " style="display:none" name="$key" #$key="ngModel"
+                [(ngModel)]="dispensacionService.selectedDispensacion.$key" />
+              <div class="form-group col-md-12">
+                <label for="">Nombre del Cliente</label>
+                <input type="text" class="form-control" name="obs" #obs="ngModel"
+                  [(ngModel)]="dispensacionService.selectedDispensacion.cliente" 
+                  placeholder="Ingrese nombre del cliente"
+                  maxlength="50" />
+                <div class="row">
+                  <div *ngIf="obs.value != undefined" class="col">
+                    <p>Max: {{ obs.value.length }}/50</p>
+                  </div>
+                </div>
+              </div>
 
-              <label>Articulos *</label>
-              <select
-                name="descripcion"
-                class="custom-select"
-                id="descripcion"
-                #descripcion="ngModel"
-                id="descripcion"
-                [(ngModel)]="
-                  dispensacionService.selectedDispensacion.descripcion
-                "
-                required
-              >
-                <option selected="true" value="">Seleccione un artículo</option>
-                <option *ngFor="let in of detalle"> {{ in.detalle }}</option>
-              </select>
               <div class="row">
-                <div
-                  class="text-danger col"
-                  *ngIf="
-                    descripcion.errors &&
-                    (descripcion.dirty || descripcion.touched)
-                  "
-                >
-                  <p [hidden]="!descripcion.errors.required">
-                    Campo requerido.
-                  </p>
+                <div class="form-group col">
+                  <label>Producto*</label>
+                  <select name="descripcion" class="custom-select" id="descripcion" #descripcion="ngModel"
+                    id="descripcion" [(ngModel)]="
+                  dispensacionService.selectedDispensacion.descripcion
+                " required>
+                    <option selected="true" value="">Seleccione un producto</option>
+                    <option *ngFor="let in of detalle"> {{ in.detalle }}</option>
+                  </select>
+                </div>
+          
+                <div class="form-group col-md-4">
+                  <label for="">Medida</label>
+                  <input type="text" class="form-control" name="medida" 
+                    placeholder="Contenido"
+                    maxlength="50" />
                 </div>
               </div>
               <div class="row">
-                <div class="col">
-                  <label>Dispensado al Personal *</label>
-                  <select
-                    name="personal"
-                    class="custom-select"
-                    id="personal"
-                    #personal="ngModel"
-                    [(ngModel)]="
-                      dispensacionService.selectedDispensacion.personal
-                    "
-                    required
-                  >
-                    <option selected="true" value=""
-                      >Seleccione un personal</option
-                    >
-                    <option *ngFor="let personal of nombrePersonal">
-                      {{ personal.nombre }}</option
-                    >
-                  </select>
-                  <div class="row">
-                    <div
-                      class="text-danger col"
-                      *ngIf="
-                        personal.errors && (personal.dirty || personal.touched)
-                      "
-                    >
-                      <p [hidden]="!personal.errors.required">
-                        Campo requerido.
-                      </p>
-                    </div>
-                  </div>
-                </div>
                 <div class="form-group col-md-4">
                   <label for="">Cantidad *</label>
-                  <input
-                    id="cantidad"
-                    type="number"
-                    class="form-control"
-                    name="cantidad"
-                    #cantidad="ngModel"
+                  <input id="cantidad" type="number" class="form-control" name="cantidad" #cantidad="ngModel"
                     [(ngModel)]="
                       dispensacionService.selectedDispensacion.cantidad
-                    "
-                    placeholder="Cantidad"
-                    required
-                    maxlength="5"
-                    minlength="1"
-                  />
+                    " placeholder="Cantidad" required maxlength="5" minlength="1" />
                   <div class="row">
                     <div *ngIf="cantidad.value != undefined" class="col">
                       <p>Max: {{ cantidad.value.length }}/5</p>
                     </div>
 
-                    <div
-                      class="text-danger col"
-                      *ngIf="
+                    <div class="text-danger col" *ngIf="
                         cantidad.errors && (cantidad.dirty || cantidad.touched)
-                      "
-                    >
+                      ">
                       <p [hidden]="!cantidad.errors.required">
                         Campo requerido.
                       </p>
@@ -147,25 +81,46 @@
                     </div>
                   </div>
                 </div>
+                <div class="form-group col">
+                  <label for="">Precio unitario *</label>
+                  <input id="precioUnitario" type="number" class="form-control" name="precioUnitario"
+                    #precioUnitario="ngModel" [(ngModel)]="
+                      dispensacionService.selectedDispensacion.precioUnitario
+                    " placeholder="Precio Unitario" required maxlength="5" minlength="1" />
+                  <div class="row">
+                    <div *ngIf="precioUnitario.value != undefined" class="col">
+                      <p>Max: {{ precioUnitario.value.length }}/5</p>
+                    </div>
+
+                    <div class="text-danger col" *ngIf="
+                        precioUnitario.errors && (precioUnitario.dirty || precioUnitario.touched)
+                      ">
+                      <p [hidden]="!precioUnitario.errors.required">
+                        Campo requerido.
+                      </p>
+                      <p *ngIf="precioUnitario.errors?.minlength">
+                        Mínimo 3 caracteres
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col">
+                  <label for="">Precio Total</label>
+
+                  <h2 *ngIf="!cantidad.value || !precioUnitario.value">0 Bs</h2>
+                  <h2 *ngIf="cantidad.value && precioUnitario.value">{{ cantidad.value * precioUnitario.value }} Bs
+                  </h2>
+                </div>
               </div>
 
               <div class="row">
                 <div class="form-group col">
                   <label for="">Fecha *</label>
-                  <input
-                    type="date"
-                    class="form-control"
-                    name="fecha"
-                    #fecha="ngModel"
-                    [(ngModel)]="dispensacionService.selectedDispensacion.fecha"
-                    placeholder="Agredar Fecha de Registro"
-                    required
-                  />
+                  <input type="date" class="form-control" name="fecha" #fecha="ngModel"
+                    [(ngModel)]="dispensacionService.selectedDispensacion.fecha" placeholder="Agredar Fecha de Registro"
+                    required />
                   <div class="row">
-                    <div
-                      class="text-danger col-md-3"
-                      *ngIf="fecha.errors && (fecha.dirty || fecha.touched)"
-                    >
+                    <div class="text-danger col-md-3" *ngIf="fecha.errors && (fecha.dirty || fecha.touched)">
                       <p [hidden]="!fecha.errors.required">
                         Campo requerido.
                       </p>
@@ -173,37 +128,31 @@
                   </div>
                 </div>
                 <div class="form-group col-md-6">
-                  <label for="">Descripcion</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    name="obs"
-                    #obs="ngModel"
-                    [(ngModel)]="dispensacionService.selectedDispensacion.obs"
-                    placeholder="Descripcion"
-                    maxlength="50"
-                  />
+                  <label>Dispensado al Personal *</label>
+                  <select name="personal" class="custom-select" id="personal" #personal="ngModel" [(ngModel)]="
+                      dispensacionService.selectedDispensacion.personal
+                    " required>
+                    <option selected="true" value="">Seleccione un personal</option>
+                    <option *ngFor="let personal of nombrePersonal">
+                      {{ personal.nombre }}</option>
+                  </select>
                   <div class="row">
-                    <div *ngIf="obs.value != undefined" class="col">
-                      <p>Max: {{ obs.value.length }}/50</p>
+                    <div class="text-danger col" *ngIf="
+                        personal.errors && (personal.dirty || personal.touched)
+                      ">
+                      <p [hidden]="!personal.errors.required">
+                        Campo requerido.
+                      </p>
                     </div>
                   </div>
                 </div>
               </div>
 
               <div class="modal-footer">
-                <button
-                  class="btn btn-primary"
-                  type="submit"
-                  [disabled]="!dispensacionForm.valid"
-                >
-                  <i class="fas fa-plus-circle">Agregar </i>
+                <button class="btn btn-primary" type="submit" [disabled]="!dispensacionForm.valid">
+                  <i class="fas fa-plus-circle">Registrar venta </i>
                 </button>
-                <button
-                  class="btn btn-secondary "
-                  type="reset"
-                  (click)="resetForm(dispensacionForm)"
-                >
+                <button class="btn btn-secondary " type="reset" (click)="resetForm(dispensacionForm)">
                   <i class=" fas fa sync-alt"> Limpiar </i>
                 </button>
               </div>
@@ -218,9 +167,9 @@
 <!--mostrar taabla-->
 <div clase="card">
   <div class="card-body">
-    <h3 class="text-center">
-      LISTA DE ALMACEN
-    </h3>
+    <h2 class="text-center">
+      REGISTRO DE VENTAS
+    </h2>
     <table class="table ">
       <thead>
         <tr>
@@ -240,18 +189,11 @@
           <td>{{ dispensacion.fecha }}</td>
           <td>{{ dispensacion.obs }}</td>
 
-          <a
-            class="btn btn-secondary text-white"
-            (click)="onEdit(dispensacion)"
-            data-toggle="modal"
-            data-target="#exampleModalScrollable"
-          >
+          <a class="btn btn-secondary text-white" (click)="onEdit(dispensacion)" data-toggle="modal"
+            data-target="#exampleModalScrollable">
             <i class="fas fa-edit"></i>
           </a>
-          <a
-            class="btn btn-danger text-white"
-            (click)="onDelete(dispensacion.$key)"
-          >
+          <a class="btn btn-danger text-white" (click)="onDelete(dispensacion.$key)">
             <i class="fas fa-trash-alt"></i>
           </a>
         </tr>

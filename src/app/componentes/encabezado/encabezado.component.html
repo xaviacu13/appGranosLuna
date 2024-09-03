@@ -1,40 +1,96 @@
-<div class="p-0 bg-info text-white ">
-  <div class="row ">
+<form #formLogin="ngForm" (submit)="onXavi()">
+<div class="p-0 bg-info ">
+  <div class="heder">
     <div class=" ml-4 col-0">
-      <img src="assets/images/rospi.jpeg" alt="" width="150" height="81" />
+      <img src="assets/images/logo/gl2.jpeg" alt="logo" height="81" class="rounded-circle" />
     </div>
     <div class="col-9 text-center">
-      <div class="">
-        <h3>Granos Luna</h3>
+      <div class="color">
+        <h3>Licoreria Muyupampa</h3>
       </div>
-      <div class="">
-        <p>Todo lo que buscas lo tememos aqui... </p>
+      <div class="color2">
+        <p>O te cura o te olvidas... </p>
+      </div>
+    </div>
+    <div class="categorias">
+      <div class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="false">
+        CATEGORIAS
+      </a>
+      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <a class="dropdown-item" href="#cervezas">CERVEZAS</a>
+        <a class="dropdown-item" href="#whisky">WHISKY</a>
+        <a class="dropdown-item" href="#roones">ROON</a>
+        <a class="dropdown-item" href="#vinos">VINOS</a>
+        <a class="dropdown-item" href="#otros">OTROS</a>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="isAdmin">
+    <a class="nav-link" href="" (click)="onClickLogout()">Salir</a>
+  </div>
+
+    <div class=" ml-4 col-0">
+      <!-- <button type="button" class="btn btn-secondary">Login</button> -->
+       <div *ngIf="!isAdmin">
+         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
+           data-whatever="@fat">Login</button>
+       </div>
+      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">Iniciar sesión</h5>
+            </div>
+            <div class="modal-body">
+         
+                <div class="container">
+                  <div class="logo">
+                    <img src="assets/images/logo/gl2.jpeg" alt="logo" height="100" class="rounded-circle" />
+                  </div>
+                  <div class="col">
+                    <div class="col">
+                      <label for="uname"><b>Introducir Correo</b></label>
+                      <input [(ngModel)]="email" type="email" placeholder="Introducir Correo" name="email"
+                        class="form-control" required />
+                    </div>
+                      <br>
+                    <div class="col">
+                      <label for="psw"><b>Contraseña</b></label>
+                      <input [(ngModel)]="password" type="password" placeholder="Introducir Contraseña" name="password"
+                        id="password" class="form-control" required />
+                    </div>
+                  </div>
+                </div>
+          
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary">Ingresar</button>
+              <button type="button" class="btn btn-outline-primary" data-dismiss="modal"
+              (click)="irRegistro()">Registrarse</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
-  <nav class="navbar navbar-expand-lg navbar-light bg-light" *ngIf="isAdmin">
-    <!-- <nav class="navbar navbar-expand-lg navbar-light bg-light" > -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light" *ngIf="isAdmin">
+  <!-- <nav class="navbar navbar-expand-lg navbar-light bg-light" > -->
 
-  <button
-    class="navbar-toggler"
-    type="button"
-    data-toggle="collapse"
-    data-target="#navbarSupportedContent"
-    aria-controls="navbarSupportedContent"
-    aria-expanded="false"
-    aria-label="Toggle navigation"
-  >
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" routerLink="/personal-list"
-          >Personal <span class="sr-only">(current)</span></a
-        >
+        <a class="nav-link" routerLink="/personal-list">Personal <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item active">
         <a class="nav-link" routerLink="/insumos">Productos</a>
@@ -64,15 +120,8 @@
         <a class="nav-link" routerLink="/dispensacion">Ventas</a>
       </li>
       <li class="nav-item dropdown">
-        <a
-          class="nav-link dropdown-toggle"
-          href="#"
-          id="navbarDropdown"
-          role="button"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-        >
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
           Productos
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -86,15 +135,8 @@
         </div>
       </li>
       <li class="nav-item dropdown">
-        <a
-          class="nav-link dropdown-toggle"
-          href="#"
-          id="navbarDropdown"
-          role="button"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-        >
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
           Servicios
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -112,15 +154,8 @@
       </li>
 
       <li class="nav-item dropdown">
-        <a
-          class="nav-link dropdown-toggle"
-          href="#"
-          id="navbarDropdown"
-          role="button"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-        >
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
           Caja
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -146,15 +181,8 @@
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light" *ngIf="isClient">
   <!-- <a class="navbar-brand" routerLink="/inicio">Inicio</a> -->
-  <button
-    class="navbar-toggler"
-    type="button"
-    data-toggle="collapse"
-    data-target="#navbarSupportedContent"
-    aria-controls="navbarSupportedContent"
-    aria-expanded="false"
-    aria-label="Toggle navigation"
-  >
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
@@ -162,9 +190,7 @@
     <ul class="navbar-nav mr-auto">
 
       <li class="nav-item active">
-        <a class="nav-link" routerLink="/personal-list"
-          >Personal <span class="sr-only">(current)</span></a
-        >
+        <a class="nav-link" routerLink="/personal-list">Personal <span class="sr-only">(current)</span></a>
       </li>
 
       <!-- <li class="nav-item active">
@@ -174,7 +200,7 @@
       <li class="nav-item active">
         <a class="nav-link" routerLink="/sucursal">Sucursal</a>
       </li>
-      
+
       <!-- <li class="nav-item active">
         <a class="nav-link" routerLink="/proveedor">Proveedores</a>
       </li> -->
@@ -190,7 +216,7 @@
       <!-- <li class="nav-item active">
         <a class="nav-link" routerLink="/cotizacion">Cotizar</a>
       </li> -->
-      
+
       <!-- <li class="nav-item active">
         <a class="nav-link" routerLink="/almacen">Almacen</a>
       </li> -->
@@ -224,38 +250,22 @@
         <a class="nav-link" routerLink="/r-trabajo">Catalogo</a>
       </li>
 
-      <!-- <li class="nav-item dropdown">
-        <a
-          class="nav-link dropdown-toggle"
-          href="#"
-          id="navbarDropdown"
-          role="button"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-        >
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
           Servicios
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" routerLink="/registropedidolist"
-            >Registro de Pedidos</a
-          >
+          <a class="dropdown-item" routerLink="/registropedidolist">Registro de Pedidos</a>
           <a class="dropdown-item" routerLink="/entregas">Entrega de Pedidos</a>
           <a class="dropdown-item" routerLink="/itemRegistro">Item Registro</a>
           <a class="dropdown-item" routerLink="/usuarios">Registrar Usuario</a>
         </div>
-      </li> -->
+      </li>
 
-      <!-- <li class="nav-item dropdown">
-        <a
-          class="nav-link dropdown-toggle"
-          href="#"
-          id="navbarDropdown"
-          role="button"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-        >
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
           Caja
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -263,9 +273,9 @@
           <a class="dropdown-item" routerLink="/ingresos">Registrar Ingresos</a>
           <a class="dropdown-item" routerLink="/gastos">Registrar Gastos</a>
         </div>
-      </li> -->
+      </li>
       <li class="nav-item active">
-        <a class="nav-link" href="" (click)="onClickLogout()">Salir</a>
+        <a class="nav-link" href="" (click)="onClickLogout()">Salir xavier</a>
       </li>
       <!--
         <li class="nav-item">
@@ -277,15 +287,8 @@
 </nav>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light" *ngIf="isRecepcionista">
-  <button
-    class="navbar-toggler"
-    type="button"
-    data-toggle="collapse"
-    data-target="#navbarSupportedContent"
-    aria-controls="navbarSupportedContent"
-    aria-expanded="false"
-    aria-label="Toggle navigation"
-  >
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
@@ -335,15 +338,8 @@
       </li> -->
 
       <li class="nav-item dropdown">
-        <a
-          class="nav-link dropdown-toggle"
-          href="#"
-          id="navbarDropdown"
-          role="button"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-        >
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
           Lista de Productos
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -353,15 +349,8 @@
       </li>
 
       <li class="nav-item dropdown">
-        <a
-          class="nav-link dropdown-toggle"
-          href="#"
-          id="navbarDropdown"
-          role="button"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-        >
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
           Servicios
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -375,15 +364,8 @@
       </li>
 
       <li class="nav-item dropdown">
-        <a
-          class="nav-link dropdown-toggle"
-          href="#"
-          id="navbarDropdown"
-          role="button"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-        >
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
           Caja
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -398,3 +380,4 @@
     </ul>
   </div>
 </nav>
+</form>

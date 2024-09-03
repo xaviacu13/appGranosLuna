@@ -25,12 +25,12 @@ export class AutentificacionComponent implements OnInit {
 
   onLogin() {
 
-    this.authService.loginEmail(this.email, this.password)
-    // this.authService.loginEmail('admin@gmail.com','administrador')
+    // this.authService.loginEmail(this.email, this.password)
+     this.authService.loginEmail('admin@gmail.com','administrador')
     .then(res => {
         var ref = firebase.database().ref("Usuario");
-        ref.orderByChild("correo").equalTo(this.email).on("child_added", snap => {
-          // ref.orderByChild("correo").equalTo('admin@gmail.com').on("child_added", snap => {
+        // ref.orderByChild("correo").equalTo(this.email).on("child_added", snap => {
+         ref.orderByChild("correo").equalTo('admin@gmail.com').on("child_added", snap => {
             
           this.router.navigate(["/inicio"]);
         });
