@@ -7,4 +7,5 @@ export class Insumo {
     imagen:string;
     obs:string;
     precio: number;
+    desCorta: string;
 }

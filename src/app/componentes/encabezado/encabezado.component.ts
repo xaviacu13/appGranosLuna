@@ -48,8 +48,6 @@ export class EncabezadoComponent implements OnInit {
   }
 
   ngOnInit() {
-
-
     // this.onCheckUser();
     this.authService.getAuth().subscribe(auth => {
       if (auth) {
@@ -109,7 +107,7 @@ export class EncabezadoComponent implements OnInit {
 
 
   
-  onCheckUser(): void {
+  onCheckUser(): void {    
     if (this.authService.getAuth() == null) {
       this.isLogin == false;
     } else {
@@ -119,10 +117,6 @@ export class EncabezadoComponent implements OnInit {
 
   onClickLogout() {
     this.authService.logOut();
-  }
-
-  onXavii() {
-    console.log('xaviiiiii.....');
   }
 
   irRegistro() {

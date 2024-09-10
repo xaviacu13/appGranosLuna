@@ -19,6 +19,7 @@ export class DispensacionService {
         descripcion:dispensacion.descripcion,
         personal:dispensacion.personal,
         cantidad:dispensacion.cantidad,
+        precioUnitario: dispensacion.precioUnitario,
         fecha:dispensacion.fecha,
         obs:dispensacion.obs || null
       })
@@ -29,6 +30,7 @@ export class DispensacionService {
       descripcion:dispensacion.descripcion,
       personal:dispensacion.personal,
       cantidad:dispensacion.cantidad,
+      precioUnitario: dispensacion.precioUnitario,
       fecha:dispensacion.fecha,
       obs:dispensacion.obs || null
      });

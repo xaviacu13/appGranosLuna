@@ -63,9 +63,9 @@
                       >
                     <option
                       *ngFor="let insumo of detalle"
-                      [value]="insumo.detalle"
+                      [value]="insumo.desCorta"
                     >
-                      {{ insumo.detalle }}</option
+                    {{ insumo.detalle }},  {{insumo.obs}}, {{ insumo.unidadMedida }}</option
                     >
                   </select>
                   <div class="row">
@@ -117,41 +117,7 @@
                     </div>
                   </div>
                 </div>
-
-                <div class="col">
-                  <label>Autorizado por el Personal *</label>
-                  <select
-                    name="personal"
-                    class="custom-select"
-                    id="personal"
-                    #personal="ngModel"
-                    [(ngModel)]="compraService.selectedCompra.personal"
-                  >
-                  <option [selected]="true" [ngValue]="undefined"
-                        >--Seleccione--</option
-                      >
-                    <option
-                      *ngFor="let personal of nombrePersonal"
-                      [value]="personal.nombre"
-                    >
-                      {{ personal.nombre }}</option
-                    >
-                  </select>
-                  <div class="row">
-                    <div
-                      class="text-danger col"
-                      *ngIf="
-                        personal.errors && (personal.dirty || personal.touched)
-                      "
-                    >
-                      <p [hidden]="!personal.errors.required">
-                        Campo requerido.
-                      </p>
-                    </div>
-                  </div>
-                </div>
               </div>
-
               <div class="row mt-3">
                 <div class="form-group col">
                   <label for="">Cantidad *</label>
@@ -187,7 +153,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="form-group col">
+                <!-- <div class="form-group col">
                   <label for="">Concentracion del contenido *</label>
                   <input
                     type="text"
@@ -220,7 +186,7 @@
                       </p>
                     </div>
                   </div>
-                </div>
+                </div> -->
                 <div class="form-group col">
                   <label for="">Precio Unitario *</label>
                   <input
@@ -255,27 +221,15 @@
                     </div>
                   </div>
                 </div>
+                <div class="form-group col">
+                  <label for="">Costo Total:</label>
+                  <h2 *ngIf="!cantidad.value || !precioUnitario.value">0 Bs</h2>
+                  <h2 *ngIf="cantidad.value && precioUnitario.value">{{ cantidad.value * precioUnitario.value }} Bs
+                  </h2>
+                </div>
               </div>
 
               <div class="row">
-                <div class="form-group col">
-                  <label for="">Marca del Producto</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    name="marca"
-                    #marca="ngModel"
-                    [(ngModel)]="compraService.selectedCompra.marca"
-                    placeholder="Marca del Producto"
-                    maxlength="50"
-                  />
-                  <div class="row">
-                    <div *ngIf="marca.value != undefined" class="col">
-                      <p>Max: {{ marca.value.length }}/50</p>
-                    </div>
-                  </div>
-                </div>
-
                 <div class="form-group col">
                   <label for="">Fecha de Compra *</label>
                   <input
@@ -293,6 +247,38 @@
                       *ngIf="fecha.errors && (fecha.dirty || fecha.touched)"
                     >
                       <p [hidden]="!fecha.errors.required">
+                        Campo requerido.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col">
+                  <label>Personal *</label>
+                  <select
+                    name="personal"
+                    class="custom-select"
+                    id="personal"
+                    #personal="ngModel"
+                    [(ngModel)]="compraService.selectedCompra.personal"
+                  >
+                  <option [selected]="true" [ngValue]="undefined"
+                        >--Seleccione--</option
+                      >
+                    <option
+                      *ngFor="let personal of nombrePersonal"
+                      [value]="personal.nombre"
+                    >
+                      {{ personal.nombre }}</option
+                    >
+                  </select>
+                  <div class="row">
+                    <div
+                      class="text-danger col"
+                      *ngIf="
+                        personal.errors && (personal.dirty || personal.touched)
+                      "
+                    >
+                      <p [hidden]="!personal.errors.required">
                         Campo requerido.
                       </p>
                     </div>
@@ -347,10 +333,8 @@
           <th scope="col">PROVEEDOR</th>
           <th scope="col">PERSONAL</th>
           <th scope="col">CANTIDAD</th>
-          <th scope="col">CONSENTRACION</th>
           <th scope="col">COSTO UNITARIO</th>
           <th scope="col">COSTO TOTAL</th>
-          <th scope="col">MARCA</th>
           <th scope="col">FECHA DE COMPRA</th>
           <th scope="col">ACCION</th>
         </tr>
@@ -361,10 +345,8 @@
           <td>{{ compra.proveedor }}</td>
           <td>{{ compra.personal }}</td>
           <td>{{ compra.cantidad }}</td>
-          <td>{{ compra.consentracion }}</td>
           <td>{{ compra.precioUnitario }}</td>
           <td>{{ compra.precioTotal }}</td>
-          <td>{{ compra.marca }}</td>
           <td>{{ compra.fecha }}</td>
 
           <a

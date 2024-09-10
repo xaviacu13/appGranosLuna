@@ -101,14 +101,11 @@ export class DispensacionComponent implements OnInit {
         })        
       })
       this.cajaService.insertCaja(null, fecha, glosa, entradaCaja, '', personal);
-
-      // firebase.database().ref().child('almacen/' + key).update(data)  
       setTimeout(() => { firebase.database().ref().child('almacen/' + key).update(data);}, 1000);
       this.toastr.success('Operacion Correcta', 'Venta registrada correctamente');
     }
     else {
       this.dispensacionService.updateDispensacion(dispensacionForm.value);
-
       this.toastr.success('Operacion Correcta', 'Compra modificado correctamente')
     }
     $('#exampleModalScrollable').modal('hide');
@@ -119,10 +116,6 @@ export class DispensacionComponent implements OnInit {
       dispensacionForm.reset();
     this.dispensacionService.selectedDispensacion = new Dispensacion();
   }
-
-
-
-
 
   ngOnInit() {
     if(this.authService.correo === null  || this.authService.correo === undefined){
@@ -137,7 +130,6 @@ export class DispensacionComponent implements OnInit {
           x["$key"] = element.key;
           this.dispensacionList.push(x as Dispensacion);
         });
-
 
       });
   }

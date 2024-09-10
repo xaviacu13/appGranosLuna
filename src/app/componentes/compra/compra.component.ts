@@ -54,7 +54,6 @@ export class CompraComponent implements OnInit {
     })
 
 
-
     db.list('Proveedor').snapshotChanges().subscribe(item => {
       this.nombre = [];
       item.forEach(element => {
@@ -115,7 +114,7 @@ export class CompraComponent implements OnInit {
           }
 
           // let salida = snap.val().salida;
-          let salida = 0;
+          let salida = parseInt(snap.val().salida);
           // if (snap.val().salida === null || snap.val().salida === undefined || snap.val().salida === '') {
           //   salida = 0;
           // }

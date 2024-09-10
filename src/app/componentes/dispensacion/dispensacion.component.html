@@ -28,7 +28,7 @@
               <div class="form-group col-md-12">
                 <label for="">Nombre del Cliente</label>
                 <input type="text" class="form-control" name="obs" #obs="ngModel"
-                  [(ngModel)]="dispensacionService.selectedDispensacion.cliente" 
+                  [(ngModel)]="dispensacionService.selectedDispensacion.obs" 
                   placeholder="Ingrese nombre del cliente"
                   maxlength="50" />
                 <div class="row">
@@ -46,16 +46,16 @@
                   dispensacionService.selectedDispensacion.descripcion
                 " required>
                     <option selected="true" value="">Seleccione un producto</option>
-                    <option *ngFor="let in of detalle"> {{ in.detalle }}</option>
+                    <option *ngFor="let in of detalle"> {{ in.detalle }},  {{in.obs}}, {{ in.unidadMedida }}</option>
                   </select>
                 </div>
           
-                <div class="form-group col-md-4">
+                <!-- <div class="form-group col-md-4">
                   <label for="">Medida</label>
                   <input type="text" class="form-control" name="medida" 
                     placeholder="Contenido"
                     maxlength="50" />
-                </div>
+                </div> -->
               </div>
               <div class="row">
                 <div class="form-group col-md-4">
@@ -106,7 +106,6 @@
                 </div>
                 <div class="form-group col">
                   <label for="">Precio Total</label>
-
                   <h2 *ngIf="!cantidad.value || !precioUnitario.value">0 Bs</h2>
                   <h2 *ngIf="cantidad.value && precioUnitario.value">{{ cantidad.value * precioUnitario.value }} Bs
                   </h2>
@@ -173,21 +172,26 @@
     <table class="table ">
       <thead>
         <tr>
-          <th scope="col">DESCRIPCION DEL INSUMO</th>
-          <th scope="col">PERSONAL</th>
+          <th scope="col">NOMBRE </th>
+          <th scope="col">CLIENTE</th>
           <th scope="col">CANTIDAD</th>
+          <th scope="col">PRECIO UNITARIO</th>
+          <th scope="col">PRECIO TOTAL</th>
           <th scope="col">FECHA</th>
-          <th scope="col">DESCRIPCION</th>
+          <th scope="col">PERSONAL</th>
+
           <th scope="col">EVENTO</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let dispensacion of dispensacionList">
           <td>{{ dispensacion.descripcion }}</td>
-          <td>{{ dispensacion.personal }}</td>
-          <td>{{ dispensacion.cantidad }}</td>
-          <td>{{ dispensacion.fecha }}</td>
           <td>{{ dispensacion.obs }}</td>
+          <td>{{ dispensacion.cantidad }}</td>
+          <td>{{ dispensacion.precioUnitario }}</td>
+          <td>{{ dispensacion.precioUnitario*dispensacion.cantidad }}</td>
+          <td>{{ dispensacion.fecha }}</td>
+          <td>{{ dispensacion.personal }}</td>
 
           <a class="btn btn-secondary text-white" (click)="onEdit(dispensacion)" data-toggle="modal"
             data-target="#exampleModalScrollable">

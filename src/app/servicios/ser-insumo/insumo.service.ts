@@ -24,7 +24,9 @@ export class InsumoService {
       color: insumo.color,
       imagen: insumo.imagen,
       obs: insumo.obs || null,
-      precio: insumo.precio || null
+      precio: insumo.precio || null,
+      desCorta: insumo.detalle + ', ' + insumo.obs + ', ' + insumo.unidadMedida
+      
     })
   }
 
@@ -35,7 +37,9 @@ export class InsumoService {
       color: insumo.color,
       imagen: insumo.imagen,
       obs: insumo.obs || null,
-      precio: insumo.precio || null
+      precio: insumo.precio || null,
+      desCorta: insumo.desCorta
+
     });
   }
 

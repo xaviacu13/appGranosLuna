@@ -51,6 +51,11 @@ export class InsumosComponent implements OnInit {
     if (insumoForm.value.$key == null) {
       this.insumoService.selectedInsumo.imagen = this.img;
       insumoForm.value.imagen = this.img;
+      let detalle = insumoForm.value.detalle;
+      let obs = insumoForm.value.obs;
+      let unidadMedida = insumoForm.value.unidadMedida;
+
+      let desCorta = detalle + ', ' + obs + ', ' + unidadMedida;
 
       let estado = '';
       if (insumoForm.value.cantidadInsumo < 10) {
@@ -58,9 +63,14 @@ export class InsumosComponent implements OnInit {
       } else if (insumoForm.value.cantidadInsumo > 10) {
         estado = 'Lleno';
       } else {
-        estado = 'vacio';
+        estado = 'Vacio';
       }
-      this.almacenService.insertAlmacen(null, insumoForm.value.detalle, 0, 0, 0, estado)
+
+      
+      this.almacenService.insertAlmacen(null, desCorta, 0, 0, 0, estado)
+      
+
+      
 
       this.insumoService.insertInsumo(insumoForm.value);
       this.toastr.success('Operacion Correcta', 'Insumo registrado correctamente')

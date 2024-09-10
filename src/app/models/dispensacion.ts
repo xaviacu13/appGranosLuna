@@ -3,6 +3,7 @@ export class Dispensacion {
     descripcion:string;
     personal:string;
     cantidad:number;
+    precioUnitario: number;
     fecha:Date;
     obs:string;
 }
